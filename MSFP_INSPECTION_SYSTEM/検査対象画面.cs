@@ -78,25 +78,58 @@ namespace MSFP_INSPECTION_SYSTEM
                     }
 
                  }
-                pictureBoxIpl.ImageIpl = 合成画像[0];
+                pictureBoxIpl.ImageIpl = 合成画像[trackBar.Value];
             }
         }
+        private void Click_合成済み(object sender, EventArgs e)
+        {
+            合成画像 = new Mat[検査面数];
 
+            OpenFileDialog dialog = new OpenFileDialog()
+            {
+                Multiselect = true,  // 複数選択の可否
+                Filter =  // フィルタ
+                "画像ファイル|*.bmp;*.gif;*.jpg;*.png|全てのファイル|*.*",
+            };
+            //ダイアログを表示
+            DialogResult result = dialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                //OKボタンがクリックされたとき
+                //選択されたファイル名をすべて表示する
+
+
+
+                foreach (var file in dialog.FileNames.Select((value, index) => new { value, index }))
+                {
+                    var index = file.index;
+                    合成画像[index] = new Mat(file.value, ImreadModes.GrayScale);
+
+                }
+                pictureBoxIpl.ImageIpl = 合成画像[trackBar.Value];
+            }
+        }
         private void ValueChanged_trackBar(object sender, EventArgs e)
         {
             var val = trackBar.Value;
             if (radioButton_合成.Checked)
+            {
                 if (合成画像 != null) pictureBoxIpl.ImageIpl = 合成画像[val];
+            }
             else if (radioButton_TopHat.Checked)
+            {
                 if (TopHat != null) pictureBoxIpl.ImageIpl = TopHat[val];
-            else 
+            }
+            else
+            {
                 if (二値化 != null) pictureBoxIpl.ImageIpl = 二値化[val];
+            }
         }
 
         private void Click_合成開始(object sender, EventArgs e)
         {
-            foreach (Mat mat in 合成画像) mat.Dispose();
-            自作合成処理();
+            if(合成画像!=null)foreach (Mat mat in 合成画像) mat.Dispose();
+            if(合成用素材!=null)自作合成処理();
         }
 
         void 自作合成処理()
@@ -111,6 +144,27 @@ namespace MSFP_INSPECTION_SYSTEM
                     cv.コントラスト調整(ref 合成画像[num], double.Parse(textBox_傾き.Text));
                     cv.明るさ調整(ref 合成画像[num], double.Parse(textBox_明るさ.Text));
                 }
+        }
+
+        private void Click_TopHat(object sender, EventArgs e)
+        {
+            TopHat = new Mat[検査面数];
+            
+            for (int i = 0; i < 検査面数; i++) cv.TopHat(合成画像[i],ref TopHat[i], int.Parse(textBox_サイズ.Text), int.Parse(textBox_回数.Text));
+            pictureBoxIpl.ImageIpl = TopHat[trackBar.Value];
+        }
+
+        private void Click_二値(object sender, EventArgs e)
+        {
+            二値化 = new Mat[検査面数];
+            if (TopHat != null)
+            {
+                foreach (var mat in TopHat.Select((val,index)=> new {Mat= val,Index=index} ))
+                {
+                    // 匿名型から値とインデックスを取り出して使える
+                   
+                }
+            }
         }
     }
 }

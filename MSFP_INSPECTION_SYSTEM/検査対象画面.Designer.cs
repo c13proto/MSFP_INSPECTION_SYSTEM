@@ -44,11 +44,11 @@
             this.button_TopHat = new System.Windows.Forms.Button();
             this.textBox_二値 = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.radioButton_二値 = new System.Windows.Forms.RadioButton();
+            this.radioButton_TopHat = new System.Windows.Forms.RadioButton();
+            this.radioButton_合成 = new System.Windows.Forms.RadioButton();
             this.button_二値 = new System.Windows.Forms.Button();
             this.trackBar = new System.Windows.Forms.TrackBar();
-            this.radioButton_合成 = new System.Windows.Forms.RadioButton();
-            this.radioButton_TopHat = new System.Windows.Forms.RadioButton();
-            this.radioButton_二値 = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIpl)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
@@ -72,6 +72,7 @@
             this.button_合成済み.TabIndex = 1;
             this.button_合成済み.Text = "合成済み";
             this.button_合成済み.UseVisualStyleBackColor = true;
+            this.button_合成済み.Click += new System.EventHandler(this.Click_合成済み);
             // 
             // button_合成開始
             // 
@@ -151,7 +152,7 @@
             this.textBox_回数.Name = "textBox_回数";
             this.textBox_回数.Size = new System.Drawing.Size(36, 19);
             this.textBox_回数.TabIndex = 10;
-            this.textBox_回数.Text = "1";
+            this.textBox_回数.Text = "3";
             // 
             // textBox_サイズ
             // 
@@ -159,7 +160,7 @@
             this.textBox_サイズ.Name = "textBox_サイズ";
             this.textBox_サイズ.Size = new System.Drawing.Size(36, 19);
             this.textBox_サイズ.TabIndex = 9;
-            this.textBox_サイズ.Text = "10";
+            this.textBox_サイズ.Text = "1";
             // 
             // label5
             // 
@@ -179,6 +180,7 @@
             this.button_TopHat.TabIndex = 14;
             this.button_TopHat.Text = "TopHat";
             this.button_TopHat.UseVisualStyleBackColor = true;
+            this.button_TopHat.Click += new System.EventHandler(this.Click_TopHat);
             // 
             // textBox_二値
             // 
@@ -198,25 +200,23 @@
             this.panel1.Size = new System.Drawing.Size(29, 281);
             this.panel1.TabIndex = 17;
             // 
-            // button_二値
+            // radioButton_二値
             // 
-            this.button_二値.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_二値.Location = new System.Drawing.Point(41, 248);
-            this.button_二値.Name = "button_二値";
-            this.button_二値.Size = new System.Drawing.Size(41, 23);
-            this.button_二値.TabIndex = 18;
-            this.button_二値.Text = "二値";
-            this.button_二値.UseVisualStyleBackColor = true;
+            this.radioButton_二値.AutoSize = true;
+            this.radioButton_二値.Location = new System.Drawing.Point(6, 240);
+            this.radioButton_二値.Name = "radioButton_二値";
+            this.radioButton_二値.Size = new System.Drawing.Size(14, 13);
+            this.radioButton_二値.TabIndex = 2;
+            this.radioButton_二値.UseVisualStyleBackColor = true;
             // 
-            // trackBar
+            // radioButton_TopHat
             // 
-            this.trackBar.AutoSize = false;
-            this.trackBar.Location = new System.Drawing.Point(43, 278);
-            this.trackBar.Maximum = 4;
-            this.trackBar.Name = "trackBar";
-            this.trackBar.Size = new System.Drawing.Size(73, 27);
-            this.trackBar.TabIndex = 19;
-            this.trackBar.ValueChanged += new System.EventHandler(this.ValueChanged_trackBar);
+            this.radioButton_TopHat.AutoSize = true;
+            this.radioButton_TopHat.Location = new System.Drawing.Point(6, 208);
+            this.radioButton_TopHat.Name = "radioButton_TopHat";
+            this.radioButton_TopHat.Size = new System.Drawing.Size(14, 13);
+            this.radioButton_TopHat.TabIndex = 1;
+            this.radioButton_TopHat.UseVisualStyleBackColor = true;
             // 
             // radioButton_合成
             // 
@@ -229,23 +229,26 @@
             this.radioButton_合成.TabStop = true;
             this.radioButton_合成.UseVisualStyleBackColor = true;
             // 
-            // radioButton_TopHat
+            // button_二値
             // 
-            this.radioButton_TopHat.AutoSize = true;
-            this.radioButton_TopHat.Location = new System.Drawing.Point(6, 208);
-            this.radioButton_TopHat.Name = "radioButton_TopHat";
-            this.radioButton_TopHat.Size = new System.Drawing.Size(14, 13);
-            this.radioButton_TopHat.TabIndex = 1;
-            this.radioButton_TopHat.UseVisualStyleBackColor = true;
+            this.button_二値.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_二値.Location = new System.Drawing.Point(41, 248);
+            this.button_二値.Name = "button_二値";
+            this.button_二値.Size = new System.Drawing.Size(41, 23);
+            this.button_二値.TabIndex = 18;
+            this.button_二値.Text = "二値";
+            this.button_二値.UseVisualStyleBackColor = true;
+            this.button_二値.Click += new System.EventHandler(this.Click_二値);
             // 
-            // radioButton_二値
+            // trackBar
             // 
-            this.radioButton_二値.AutoSize = true;
-            this.radioButton_二値.Location = new System.Drawing.Point(6, 240);
-            this.radioButton_二値.Name = "radioButton_二値";
-            this.radioButton_二値.Size = new System.Drawing.Size(14, 13);
-            this.radioButton_二値.TabIndex = 2;
-            this.radioButton_二値.UseVisualStyleBackColor = true;
+            this.trackBar.AutoSize = false;
+            this.trackBar.Location = new System.Drawing.Point(43, 278);
+            this.trackBar.Maximum = 4;
+            this.trackBar.Name = "trackBar";
+            this.trackBar.Size = new System.Drawing.Size(73, 27);
+            this.trackBar.TabIndex = 19;
+            this.trackBar.ValueChanged += new System.EventHandler(this.ValueChanged_trackBar);
             // 
             // 検査対象画面
             // 

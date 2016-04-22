@@ -81,6 +81,16 @@ namespace MSFP_INSPECTION_SYSTEM
                 }
         }
 
-
+        public void TopHat(Mat src,ref Mat dst,int size,int num)
+        {
+            dst = src.Clone();
+            size = 2 * size + 1;
+            var kernel = Cv2.GetStructuringElement(MorphShapes.Rect,new Size(size,size));
+            Cv2.MorphologyEx(src,dst,MorphTypes.TopHat, kernel, null,num);
+        }
+        public void 二値化(ref Mat src, int val)
+        {
+            src = src.Threshold(val,255,ThresholdTypes.Binary);
+        }
     }
 }

@@ -20,6 +20,8 @@ namespace MSFP_INSPECTION_SYSTEM
         public static int[][] 正解座標;
         public static int 検査面数= 5;
 
+        CV cv = new CV();
+
         public Main()
         {
             InitializeComponent();
@@ -49,7 +51,7 @@ namespace MSFP_INSPECTION_SYSTEM
                 {
                     var index = file.index;
                     テンプレート[index] = new Mat(file.value, ImreadModes.GrayScale);
-                    テンプレート[index] = テンプレート[index].Threshold(254, 255, ThresholdTypes.Binary);
+                    cv.二値化(ref テンプレート[index],254);
                 }
                 pictureBoxIpl.ImageIpl = テンプレート[0];
             }

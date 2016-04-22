@@ -28,14 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.button_テンプレート = new System.Windows.Forms.Button();
             this.button_検査対象 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.textBox_検査面数 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button_正解リスト = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.pictureBoxIpl = new OpenCvSharp.UserInterface.PictureBoxIpl();
             this.trackBar = new System.Windows.Forms.TrackBar();
             this.button_評価開始 = new System.Windows.Forms.Button();
@@ -209,7 +207,6 @@
         private System.Windows.Forms.TextBox textBox_検査面数;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button_正解リスト;
-        private System.Windows.Forms.Timer timer1;
         private OpenCvSharp.UserInterface.PictureBoxIpl pictureBoxIpl;
         private System.Windows.Forms.TrackBar trackBar;
         private System.Windows.Forms.Button button_評価開始;
