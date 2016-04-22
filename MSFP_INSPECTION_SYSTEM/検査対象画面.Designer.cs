@@ -208,6 +208,7 @@
             this.radioButton_二値.Size = new System.Drawing.Size(14, 13);
             this.radioButton_二値.TabIndex = 2;
             this.radioButton_二値.UseVisualStyleBackColor = true;
+            this.radioButton_二値.CheckedChanged += new System.EventHandler(this.CheckedChanged_二値);
             // 
             // radioButton_TopHat
             // 
@@ -217,6 +218,7 @@
             this.radioButton_TopHat.Size = new System.Drawing.Size(14, 13);
             this.radioButton_TopHat.TabIndex = 1;
             this.radioButton_TopHat.UseVisualStyleBackColor = true;
+            this.radioButton_TopHat.CheckedChanged += new System.EventHandler(this.CheckedChanged_TopHat);
             // 
             // radioButton_合成
             // 
@@ -228,6 +230,7 @@
             this.radioButton_合成.TabIndex = 0;
             this.radioButton_合成.TabStop = true;
             this.radioButton_合成.UseVisualStyleBackColor = true;
+            this.radioButton_合成.CheckedChanged += new System.EventHandler(this.CheckedChanged_合成);
             // 
             // button_二値
             // 

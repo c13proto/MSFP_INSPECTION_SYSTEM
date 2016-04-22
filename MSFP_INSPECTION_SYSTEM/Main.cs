@@ -53,7 +53,9 @@ namespace MSFP_INSPECTION_SYSTEM
                     テンプレート[index] = new Mat(file.value, ImreadModes.GrayScale);
                     cv.二値化(ref テンプレート[index],254);
                 }
-                pictureBoxIpl.ImageIpl = テンプレート[0];
+
+                if (radioButton_テンプレート.Checked) 表示画像更新();
+                radioButton_テンプレート.Checked = true;
             }
         }
 
@@ -71,14 +73,7 @@ namespace MSFP_INSPECTION_SYSTEM
 
         private void ValueChanged_trackBar(object sender, EventArgs e)
         {
-            var val = trackBar.Value;
-
-            if (radioButton_テンプレート.Checked)
-                if (テンプレート != null)pictureBoxIpl.ImageIpl = テンプレート[val];
-            else if (radioButton_検査対象.Checked)
-                if (検査結果!=null) pictureBoxIpl.ImageIpl = 検査結果[val];
-            else 
-                if(評価結果!=null) pictureBoxIpl.ImageIpl = 評価結果[val];
+            表示画像更新();
         }
 
         private void TextChanged_検査面数(object sender, EventArgs e)
@@ -90,6 +85,39 @@ namespace MSFP_INSPECTION_SYSTEM
         private void Click_評価開始(object sender, EventArgs e)
         {
 
+        }
+
+
+        void 表示画像更新()
+        {
+            var val = trackBar.Value;
+
+            if (radioButton_テンプレート.Checked)
+            {
+                if (テンプレート != null) pictureBoxIpl.ImageIpl = テンプレート[val];
+            }
+            else if (radioButton_検査対象.Checked)
+            {
+                if (検査結果 != null) pictureBoxIpl.ImageIpl = 検査結果[val];
+            }
+            else
+            {
+                if (評価結果 != null) pictureBoxIpl.ImageIpl = 評価結果[val];
+            }
+        }
+
+        //ラジオボタンの変更(2回処理されるのを回避)
+        private void CheckedChanged_評価開始(object sender, EventArgs e)
+        {
+            if (radioButton_評価開始.Checked) 表示画像更新();
+        }
+        private void CheckedChanged_検査対象(object sender, EventArgs e)
+        {
+            if (radioButton_検査対象.Checked) 表示画像更新();
+        }
+        private void CheckedChanged_テンプレート(object sender, EventArgs e)
+        {
+            if (radioButton_テンプレート.Checked) 表示画像更新();
         }
     }
 }

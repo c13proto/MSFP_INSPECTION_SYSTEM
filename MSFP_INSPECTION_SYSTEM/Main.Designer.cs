@@ -38,7 +38,7 @@
             this.trackBar = new System.Windows.Forms.TrackBar();
             this.button_評価開始 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.radioButton_検査開始 = new System.Windows.Forms.RadioButton();
+            this.radioButton_評価開始 = new System.Windows.Forms.RadioButton();
             this.radioButton_検査対象 = new System.Windows.Forms.RadioButton();
             this.radioButton_テンプレート = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIpl)).BeginInit();
@@ -135,7 +135,7 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.radioButton_検査開始);
+            this.panel1.Controls.Add(this.radioButton_評価開始);
             this.panel1.Controls.Add(this.radioButton_検査対象);
             this.panel1.Controls.Add(this.radioButton_テンプレート);
             this.panel1.Location = new System.Drawing.Point(6, 35);
@@ -143,14 +143,15 @@
             this.panel1.Size = new System.Drawing.Size(25, 146);
             this.panel1.TabIndex = 9;
             // 
-            // radioButton_検査開始
+            // radioButton_評価開始
             // 
-            this.radioButton_検査開始.AutoSize = true;
-            this.radioButton_検査開始.Location = new System.Drawing.Point(6, 128);
-            this.radioButton_検査開始.Name = "radioButton_検査開始";
-            this.radioButton_検査開始.Size = new System.Drawing.Size(14, 13);
-            this.radioButton_検査開始.TabIndex = 10;
-            this.radioButton_検査開始.UseVisualStyleBackColor = true;
+            this.radioButton_評価開始.AutoSize = true;
+            this.radioButton_評価開始.Location = new System.Drawing.Point(6, 128);
+            this.radioButton_評価開始.Name = "radioButton_評価開始";
+            this.radioButton_評価開始.Size = new System.Drawing.Size(14, 13);
+            this.radioButton_評価開始.TabIndex = 10;
+            this.radioButton_評価開始.UseVisualStyleBackColor = true;
+            this.radioButton_評価開始.CheckedChanged += new System.EventHandler(this.CheckedChanged_評価開始);
             // 
             // radioButton_検査対象
             // 
@@ -160,6 +161,7 @@
             this.radioButton_検査対象.Size = new System.Drawing.Size(14, 13);
             this.radioButton_検査対象.TabIndex = 1;
             this.radioButton_検査対象.UseVisualStyleBackColor = true;
+            this.radioButton_検査対象.CheckedChanged += new System.EventHandler(this.CheckedChanged_検査対象);
             // 
             // radioButton_テンプレート
             // 
@@ -171,6 +173,7 @@
             this.radioButton_テンプレート.TabIndex = 0;
             this.radioButton_テンプレート.TabStop = true;
             this.radioButton_テンプレート.UseVisualStyleBackColor = true;
+            this.radioButton_テンプレート.CheckedChanged += new System.EventHandler(this.CheckedChanged_テンプレート);
             // 
             // Main
             // 
@@ -211,7 +214,7 @@
         private System.Windows.Forms.TrackBar trackBar;
         private System.Windows.Forms.Button button_評価開始;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.RadioButton radioButton_検査開始;
+        private System.Windows.Forms.RadioButton radioButton_評価開始;
         private System.Windows.Forms.RadioButton radioButton_検査対象;
         private System.Windows.Forms.RadioButton radioButton_テンプレート;
     }

@@ -74,11 +74,14 @@ namespace MSFP_INSPECTION_SYSTEM
                         cv.自作反射光除去(images, ref 合成画像[index / 4]);
                         cv.コントラスト調整(ref 合成画像[index / 4], double.Parse(textBox_傾き.Text));
                         cv.明るさ調整(ref 合成画像[index / 4], double.Parse(textBox_明るさ.Text));
+                        this.Text = 100.0 * index / (4 * 検査面数) + "%";
 
                     }
 
                  }
-                pictureBoxIpl.ImageIpl = 合成画像[trackBar.Value];
+
+                if(radioButton_合成.Checked)表示画像更新();
+                else radioButton_合成.Checked = true;
             }
         }
         private void Click_合成済み(object sender, EventArgs e)
@@ -106,24 +109,14 @@ namespace MSFP_INSPECTION_SYSTEM
                     合成画像[index] = new Mat(file.value, ImreadModes.GrayScale);
 
                 }
-                pictureBoxIpl.ImageIpl = 合成画像[trackBar.Value];
+
+                if (radioButton_合成.Checked)表示画像更新();
+                else radioButton_合成.Checked = true;
             }
         }
         private void ValueChanged_trackBar(object sender, EventArgs e)
         {
-            var val = trackBar.Value;
-            if (radioButton_合成.Checked)
-            {
-                if (合成画像 != null) pictureBoxIpl.ImageIpl = 合成画像[val];
-            }
-            else if (radioButton_TopHat.Checked)
-            {
-                if (TopHat != null) pictureBoxIpl.ImageIpl = TopHat[val];
-            }
-            else
-            {
-                if (二値化 != null) pictureBoxIpl.ImageIpl = 二値化[val];
-            }
+            表示画像更新();
         }
 
         private void Click_合成開始(object sender, EventArgs e)
@@ -143,7 +136,11 @@ namespace MSFP_INSPECTION_SYSTEM
                     cv.自作反射光除去(images, ref 合成画像[num]);
                     cv.コントラスト調整(ref 合成画像[num], double.Parse(textBox_傾き.Text));
                     cv.明るさ調整(ref 合成画像[num], double.Parse(textBox_明るさ.Text));
+                    this.Text = num*100.0/検査面数 + "%";
                 }
+
+            if (radioButton_合成.Checked) 表示画像更新();
+            radioButton_合成.Checked = true;
         }
 
         private void Click_TopHat(object sender, EventArgs e)
@@ -151,7 +148,7 @@ namespace MSFP_INSPECTION_SYSTEM
             TopHat = new Mat[検査面数];
             
             for (int i = 0; i < 検査面数; i++) cv.TopHat(合成画像[i],ref TopHat[i], int.Parse(textBox_サイズ.Text), int.Parse(textBox_回数.Text));
-            pictureBoxIpl.ImageIpl = TopHat[trackBar.Value];
+            radioButton_TopHat.Checked = true;
         }
 
         private void Click_二値(object sender, EventArgs e)
@@ -159,12 +156,48 @@ namespace MSFP_INSPECTION_SYSTEM
             二値化 = new Mat[検査面数];
             if (TopHat != null)
             {
-                foreach (var mat in TopHat.Select((val,index)=> new {Mat= val,Index=index} ))
+                foreach (var indexMat in TopHat.Select((mat, index) => new { mat,index }))
                 {
-                    // 匿名型から値とインデックスを取り出して使える
-                   
+                    int index = indexMat.index;
+                    二値化[index] = indexMat.mat.Clone();
+                    cv.二値化(ref 二値化[index],int.Parse(textBox_二値.Text));
                 }
+                Main.検査結果 = 二値化;
+
+                if (radioButton_二値.Checked) 表示画像更新();
+                radioButton_二値.Checked = true;
+
             }
+        }
+        void 表示画像更新()
+        {
+            var val = trackBar.Value;
+            if (radioButton_合成.Checked)
+            {
+                if (合成画像 != null) pictureBoxIpl.ImageIpl = 合成画像[val];
+            }
+            else if (radioButton_TopHat.Checked)
+            {
+                if (TopHat != null) pictureBoxIpl.ImageIpl = TopHat[val];
+            }
+            else
+            {
+                if (二値化 != null) pictureBoxIpl.ImageIpl = 二値化[val];
+            }
+        }
+
+        //ラジオボタンの変更(2回処理されるのを回避)
+        private void CheckedChanged_二値(object sender, EventArgs e)
+        {
+            if(radioButton_二値.Checked) 表示画像更新();
+        }
+        private void CheckedChanged_TopHat(object sender, EventArgs e)
+        {
+            if (radioButton_TopHat.Checked) 表示画像更新();
+        }
+        private void CheckedChanged_合成(object sender, EventArgs e)
+        {
+            if (radioButton_合成.Checked) 表示画像更新();
         }
     }
 }
