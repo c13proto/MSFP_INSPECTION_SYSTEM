@@ -20,7 +20,7 @@ namespace MSFP_INSPECTION_SYSTEM
         int 検査面数;
 
         private static 検査対象画面 _instance;
-        CV cv = new CV();
+        MyCV MyCV = new MyCV();
 
 
         public 検査対象画面()
@@ -71,9 +71,9 @@ namespace MSFP_INSPECTION_SYSTEM
                         合成画像[index / 4] = new OpenCvSharp.Mat(合成用素材[index].Height, 合成用素材[index].Width, MatType.CV_8UC1);
                         Mat[] images = new Mat[4];
                         for (int i = 0; i < 4; i++) images[i] = 合成用素材[index - i];
-                        cv.自作反射光除去(images, ref 合成画像[index / 4]);
-                        cv.コントラスト調整(ref 合成画像[index / 4], double.Parse(textBox_傾き.Text));
-                        cv.明るさ調整(ref 合成画像[index / 4], double.Parse(textBox_明るさ.Text));
+                        MyCV.自作反射光除去(images, ref 合成画像[index / 4]);
+                        MyCV.コントラスト調整(ref 合成画像[index / 4], double.Parse(textBox_傾き.Text));
+                        MyCV.明るさ調整(ref 合成画像[index / 4], double.Parse(textBox_明るさ.Text));
                         this.Text = 100.0 * index / (4 * 検査面数) + "%";
 
                     }
@@ -133,9 +133,9 @@ namespace MSFP_INSPECTION_SYSTEM
                     合成画像[num] = new OpenCvSharp.Mat(合成用素材[0].Height, 合成用素材[0].Width, MatType.CV_8UC1);
                     Mat[] images = new Mat[4];
                     for (int i = 0; i < 4; i++) images[i] = 合成用素材[num*4 + i];
-                    cv.自作反射光除去(images, ref 合成画像[num]);
-                    cv.コントラスト調整(ref 合成画像[num], double.Parse(textBox_傾き.Text));
-                    cv.明るさ調整(ref 合成画像[num], double.Parse(textBox_明るさ.Text));
+                    MyCV.自作反射光除去(images, ref 合成画像[num]);
+                    MyCV.コントラスト調整(ref 合成画像[num], double.Parse(textBox_傾き.Text));
+                    MyCV.明るさ調整(ref 合成画像[num], double.Parse(textBox_明るさ.Text));
                     this.Text = num*100.0/検査面数 + "%";
                 }
 
@@ -147,7 +147,7 @@ namespace MSFP_INSPECTION_SYSTEM
         {
             TopHat = new Mat[検査面数];
             
-            for (int i = 0; i < 検査面数; i++) cv.TopHat(合成画像[i],ref TopHat[i], int.Parse(textBox_サイズ.Text), int.Parse(textBox_回数.Text));
+            for (int i = 0; i < 検査面数; i++) MyCV.TopHat(合成画像[i],ref TopHat[i], int.Parse(textBox_サイズ.Text), int.Parse(textBox_回数.Text));
             radioButton_TopHat.Checked = true;
         }
 
@@ -160,7 +160,7 @@ namespace MSFP_INSPECTION_SYSTEM
                 {
                     int index = indexMat.index;
                     二値化[index] = indexMat.mat.Clone();
-                    cv.二値化(ref 二値化[index],int.Parse(textBox_二値.Text));
+                    MyCV.二値化(ref 二値化[index],int.Parse(textBox_二値.Text));
                 }
                 Main.検査結果 = 二値化;
 

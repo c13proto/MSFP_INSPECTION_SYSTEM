@@ -17,10 +17,12 @@ namespace MSFP_INSPECTION_SYSTEM
         public static Mat[] 検査結果;
         public static Mat[] 評価結果;
 
-        public static int[][] 正解座標;
+        public static int[][,] 正解座標;
         public static int 検査面数= 5;
+        
 
-        CV cv = new CV();
+        MyFunction MyFunc = new MyFunction();
+        MyCV mycv = new MyCV();
 
         public Main()
         {
@@ -34,7 +36,6 @@ namespace MSFP_INSPECTION_SYSTEM
         private void Click_テンプレート(object sender, EventArgs e)
         {
             テンプレート = new Mat[検査面数];
-
             OpenFileDialog dialog = new OpenFileDialog()
             {
                 Multiselect = true,  // 複数選択の可否
@@ -51,7 +52,7 @@ namespace MSFP_INSPECTION_SYSTEM
                 {
                     var index = file.index;
                     テンプレート[index] = new Mat(file.value, ImreadModes.GrayScale);
-                    cv.二値化(ref テンプレート[index],254);
+                    mycv.二値化(ref テンプレート[index],254);
                 }
 
                 if (radioButton_テンプレート.Checked) 表示画像更新();
@@ -67,7 +68,24 @@ namespace MSFP_INSPECTION_SYSTEM
 
         private void Click_正解リスト(object sender, EventArgs e)
         {
+            正解座標 = new int[検査面数][,];
+            OpenFileDialog dialog = new OpenFileDialog()
+            {
+                Multiselect = true,  // 複数選択の可否
+                Filter =  "csvファイル|*.csv|全てのファイル|*.*",
+            };
+            //ダイアログを表示
+            DialogResult result = dialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                foreach (var csv in dialog.FileNames.Select((value, index) => new { value, index }))
+                {
+                    var index = csv.index;
+                    var value = csv.value;
+                    MyFunc.read_csv(ref 正解座標[index], value);
 
+                }
+            }
         }
 
 
@@ -84,7 +102,22 @@ namespace MSFP_INSPECTION_SYSTEM
 
         private void Click_評価開始(object sender, EventArgs e)
         {
+            if (評価結果 != null) foreach (Mat mat in 評価結果) mat.Dispose();
+            評価結果 = new Mat[検査面数];
+            
 
+            for (int i = 0; i < 検査面数; i++)
+            {
+                
+                if (テンプレート != null && 検査結果 != null)
+                {
+                    評価結果[i] = 検査結果[i].Clone();
+                    mycv.評価用画像作成(テンプレート[i], 検査結果[i], ref 評価結果[i]);
+                }
+            }
+            if (radioButton_評価開始.Checked) 表示画像更新();
+            radioButton_評価開始.Checked = true;
+            
         }
 
 
