@@ -80,9 +80,11 @@ namespace MSFP_INSPECTION_SYSTEM
 
                  }
 
-                if(radioButton_合成.Checked)表示画像更新();
-                else radioButton_合成.Checked = true;
+                //if(radioButton_合成.Checked)表示画像更新();
+                //else radioButton_合成.Checked = true;
             }
+            Click_TopHat(null,null);
+            Click_二値(null, null);
         }
         private void Click_合成済み(object sender, EventArgs e)
         {

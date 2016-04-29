@@ -48,22 +48,24 @@
             // 
             // button_テンプレート
             // 
+            this.button_テンプレート.BackColor = System.Drawing.SystemColors.Control;
             this.button_テンプレート.Location = new System.Drawing.Point(36, 35);
             this.button_テンプレート.Name = "button_テンプレート";
             this.button_テンプレート.Size = new System.Drawing.Size(79, 23);
             this.button_テンプレート.TabIndex = 0;
             this.button_テンプレート.Text = "テンプレート";
-            this.button_テンプレート.UseVisualStyleBackColor = true;
+            this.button_テンプレート.UseVisualStyleBackColor = false;
             this.button_テンプレート.Click += new System.EventHandler(this.Click_テンプレート);
             // 
             // button_検査対象
             // 
+            this.button_検査対象.BackColor = System.Drawing.SystemColors.Control;
             this.button_検査対象.Location = new System.Drawing.Point(37, 64);
             this.button_検査対象.Name = "button_検査対象";
             this.button_検査対象.Size = new System.Drawing.Size(79, 23);
             this.button_検査対象.TabIndex = 1;
             this.button_検査対象.Text = "検査対象";
-            this.button_検査対象.UseVisualStyleBackColor = true;
+            this.button_検査対象.UseVisualStyleBackColor = false;
             this.button_検査対象.Click += new System.EventHandler(this.Click_検査対象);
             // 
             // button3
@@ -95,12 +97,13 @@
             // 
             // button_正解リスト
             // 
+            this.button_正解リスト.BackColor = System.Drawing.SystemColors.Control;
             this.button_正解リスト.Location = new System.Drawing.Point(36, 93);
             this.button_正解リスト.Name = "button_正解リスト";
             this.button_正解リスト.Size = new System.Drawing.Size(79, 23);
             this.button_正解リスト.TabIndex = 5;
             this.button_正解リスト.Text = "正解リスト";
-            this.button_正解リスト.UseVisualStyleBackColor = true;
+            this.button_正解リスト.UseVisualStyleBackColor = false;
             this.button_正解リスト.Click += new System.EventHandler(this.Click_正解リスト);
             // 
             // pictureBoxIpl

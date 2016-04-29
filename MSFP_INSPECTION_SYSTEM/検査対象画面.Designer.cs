@@ -66,12 +66,13 @@
             // 
             // button_合成済み
             // 
+            this.button_合成済み.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.button_合成済み.Location = new System.Drawing.Point(41, 119);
             this.button_合成済み.Name = "button_合成済み";
             this.button_合成済み.Size = new System.Drawing.Size(75, 23);
             this.button_合成済み.TabIndex = 1;
             this.button_合成済み.Text = "合成済み";
-            this.button_合成済み.UseVisualStyleBackColor = true;
+            this.button_合成済み.UseVisualStyleBackColor = false;
             this.button_合成済み.Click += new System.EventHandler(this.Click_合成済み);
             // 
             // button_合成開始
@@ -188,7 +189,7 @@
             this.textBox_二値.Name = "textBox_二値";
             this.textBox_二値.Size = new System.Drawing.Size(28, 19);
             this.textBox_二値.TabIndex = 16;
-            this.textBox_二値.Text = "5";
+            this.textBox_二値.Text = "10";
             // 
             // panel1
             // 

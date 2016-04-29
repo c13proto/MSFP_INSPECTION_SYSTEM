@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenCvSharp;
+using OpenCvSharp.Blob;
 
 namespace MSFP_INSPECTION_SYSTEM
 {
@@ -132,7 +133,117 @@ namespace MSFP_INSPECTION_SYSTEM
 
             mask.Dispose();
         }
-        
+        public void 評価結果画像作成_debug(Mat 検査結果,Mat テンプレート,int[,] 正解座標,ref Mat color_debug)
+        {
+            int noize_min = 9, noize_max = 1000;
+            
+            Mat res_color  = new Mat(new Size(検査結果.Width, 検査結果.Height), MatType.CV_8UC3, Scalar.All(0));
+            var temp_color = res_color.Clone();
 
+            CvBlobs blobs = new CvBlobs(検査結果);
+            int score=0;
+
+            blobs.FilterByArea(noize_min, noize_max);
+            blobs.RenderBlobs(検査結果, res_color);
+
+            
+            Cv2.CvtColor(テンプレート, temp_color, ColorConversionCodes.GRAY2BGR);
+            Cv2.Add(temp_color, res_color, color_debug);
+
+            点数計算_debug(blobs, 正解座標, ref color_debug, ref score);
+            
+
+
+
+            //CvMemStorage storage = new CvMemStorage();
+            //IplImage color = new IplImage(new CvSize(検査結果画像.Width, 検査結果画像.Height), BitDepth.U8, 3);
+            ////IplImage forlabel = new IplImage(new CvSize(検査結果画像.Width, 検査結果画像.Height), BitDepth.U8, 1);
+            //IplImage sample = 検査結果画像.Clone();
+            //color.Zero();
+            //CvBlobs blobs = new CvBlobs(sample);
+            //CvFont font = new CvFont(FontFace.HersheyComplex, 0.5, 0.5);
+            //int score;
+
+            //blobs.FilterByArea(int.Parse(textBox_ノイズ除去.Text), 傷のMAXsize);
+
+            ////blobs.FilterLabels(forlabel);
+            //blobs.RenderBlobs(sample, color);//デバッグ用
+
+            //検査結果画像_color = color.Clone();
+            //var sample_color = color.Clone();
+            //Cv.CvtColor(テンプレート画像画面.編集後, sample_color, ColorConversion.GrayToBgr);
+            //Cv.Add(sample_color, color, 検査結果画像_color, テンプレート画像画面.編集後);//検査結果画像をテンプレート画像に合成させてわかり易く表示
+
+            //if (checkBox_点数表示.Checked)
+            //{
+            //    点数計算(blobs, ref 検査結果画像_color, out score);
+            //    Cv.PutText(検査結果画像_color, "score= " + score.ToString(), new CvPoint(10, 120), font, new CvColor(0, 0, 0));
+            //}
+
+
+            //pictureBoxIpl1.ImageIpl = 検査結果画像_color;
+            ////foreach (KeyValuePair<int, CvBlob> item in blobs) System.Diagnostics.Debug.WriteLine("{0}:({1},{2})\n", item.Key, (int)item.Value.Centroid.X, (int)item.Value.Centroid.Y);
+
+            //storage.Dispose();
+            //font.Dispose();
+            //color.Dispose();
+            ////forlabel.Dispose();
+            //sample.Dispose();
+            //blobs.Clear();
+
+        }
+        public void 点数計算_debug(CvBlobs blobs, int[,] 正解座標, ref Mat color, ref int score)
+        {
+            if (正解座標 != null)
+            {
+                
+                int[,] 正解座標2 = (int[,])正解座標.Clone();
+                int 正解数 = 0;
+                int 不正回数 = 0;
+
+                foreach (CvBlob item in blobs.Values)
+                {
+
+
+                    CvContourPolygon polygon = item.Contour.ConvertToPolygon();
+                    Point2f circleCenter;
+                    float circleRadius;
+
+                    GetEnclosingCircle(polygon, out circleCenter, out circleRadius);
+                    for (int j = 0; j < 正解座標2.Length / 2; j++)
+                    {
+                        if (正解座標2[j, 0] != 0 && (Math.Pow(circleCenter.X - 正解座標2[j, 0], 2) + Math.Pow(circleCenter.Y - 正解座標2[j, 1], 2) < circleRadius * circleRadius))
+                        {//外接円内にあったら
+                            Cv2.Circle(color, item.Centroid, (int)circleRadius, new Scalar(0, 0, 255), 2);
+                            正解数++;
+                            正解座標2[j, 0] = 正解座標2[j, 1] = 0;
+                            j = 正解座標2.Length;//ひとつ照合確定したら，このfor文を抜けて次のラベルの検査に移動
+                        }
+                    }
+                }
+
+                System.Diagnostics.Debug.WriteLine("未検出座標");
+                for (int i = 0; i < 正解座標2.Length / 2; i++)
+                {//検出されなかった座標が残る
+                    if (正解座標2[i, 0] != 0) System.Diagnostics.Debug.WriteLine(i + ":" + 正解座標2[i, 0] + "," + 正解座標2[i, 1]);
+                }
+
+                不正回数 = blobs.Count - 正解数;
+
+                score = (int)((float)(正解数 - 不正回数) * (10000.0f / (正解座標.Length / 2)));
+
+                Cv2.PutText(color, "score= " + score.ToString(), new Point(10, 120), HersheyFonts.HersheySimplex,1, new Scalar(0, 0, 0));
+            }
+        }
+
+        public void GetEnclosingCircle(IEnumerable<Point> points, out Point2f center, out float radius)
+        {
+            var pointsArray = points.ToArray();
+            using (var pointsMat = new Mat(pointsArray.Length, 1, MatType.CV_32SC2, pointsArray))
+            {
+                Cv2.MinEnclosingCircle(pointsMat, out center, out radius);
+            }
+        }
     }
+
 }
