@@ -13,8 +13,8 @@ namespace MSFP_INSPECTION_SYSTEM
 {
     public partial class 検査対象画面 : Form
     {
-        Mat[] 合成用素材;
-        Mat[] 合成画像;
+        public static Mat[] 合成用素材;
+        public static Mat[] 合成画像;
         Mat[] TopHat;
         Mat[] 二値化;
         int 検査面数;

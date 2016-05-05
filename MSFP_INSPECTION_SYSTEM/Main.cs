@@ -87,7 +87,33 @@ namespace MSFP_INSPECTION_SYSTEM
                 }
             }
         }
+        private void Click_評価開始(object sender, EventArgs e)
+        {
+            if (評価結果 != null) foreach (Mat mat in 評価結果) mat.Dispose();
+            評価結果 = new Mat[検査面数];
+            var gray = new Mat[検査面数];
 
+            for (int i = 0; i < 検査面数; i++)
+            {
+                if (テンプレート != null && 検査結果 != null)
+                {
+                    評価結果[i] = new Mat(new OpenCvSharp.Size(テンプレート[i].Width, テンプレート[i].Height), MatType.CV_8UC3, Scalar.All(0));
+                    gray[i] = 検査結果[i].Clone();//グレースケール
+                    mycv.評価用画像作成(テンプレート[i], 検査結果[i], ref gray[i]);
+                    if (正解座標 != null) mycv.評価結果画像作成_debug(gray[i], テンプレート[i], 正解座標[i], ref 評価結果[i]);
+                    else mycv.評価結果画像作成_debug(gray[i], テンプレート[i], null, ref 評価結果[i]);
+                }
+            }
+            gray = null;
+            if (radioButton_評価開始.Checked) 表示画像更新();
+            radioButton_評価開始.Checked = true;
+        }
+        private void Click_探索(object sender, EventArgs e)
+        {
+            if (検査対象画面.合成画像 != null && テンプレート != null&&正解座標!=null)
+                探索画面.Instance.Show();
+            else MessageBox.Show("ファイルを選択してください");
+        }
 
         private void ValueChanged_trackBar(object sender, EventArgs e)
         {
@@ -100,27 +126,6 @@ namespace MSFP_INSPECTION_SYSTEM
             if (int.TryParse(textBox_検査面数.Text, out num)) 検査面数 = num;
         }
 
-        private void Click_評価開始(object sender, EventArgs e)
-        {
-            if (評価結果 != null) foreach (Mat mat in 評価結果) mat.Dispose();
-            評価結果 = new Mat[検査面数];
-            var gray=new Mat[検査面数];
-
-            for (int i = 0; i < 検査面数; i++)
-            {                
-                if (テンプレート != null && 検査結果 != null)
-                {
-                    評価結果[i]= new Mat(new OpenCvSharp.Size(テンプレート[i].Width, テンプレート[i].Height), MatType.CV_8UC3, Scalar.All(0));
-                    gray[i] = 検査結果[i].Clone();//グレースケール
-                    mycv.評価用画像作成(テンプレート[i], 検査結果[i], ref gray[i]);
-                    if(正解座標!=null)mycv.評価結果画像作成_debug(gray[i], テンプレート[i], 正解座標[i], ref 評価結果[i]);
-                    else mycv.評価結果画像作成_debug(gray[i], テンプレート[i], null, ref 評価結果[i]);
-                }
-            }
-            gray = null;
-            if (radioButton_評価開始.Checked) 表示画像更新();
-            radioButton_評価開始.Checked = true;            
-        }
 
 
         void 表示画像更新()
@@ -154,5 +159,7 @@ namespace MSFP_INSPECTION_SYSTEM
         {
             if (radioButton_テンプレート.Checked) 表示画像更新();
         }
+
+
     }
 }

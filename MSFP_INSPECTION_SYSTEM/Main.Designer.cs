@@ -76,6 +76,7 @@
             this.button3.TabIndex = 2;
             this.button3.Text = "探索";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.Click_探索);
             // 
             // textBox_検査面数
             // 
@@ -213,13 +214,13 @@
         private System.Windows.Forms.TextBox textBox_検査面数;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button_正解リスト;
-        private OpenCvSharp.UserInterface.PictureBoxIpl pictureBoxIpl;
         private System.Windows.Forms.TrackBar trackBar;
         private System.Windows.Forms.Button button_評価開始;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.RadioButton radioButton_評価開始;
         private System.Windows.Forms.RadioButton radioButton_検査対象;
         private System.Windows.Forms.RadioButton radioButton_テンプレート;
+        private OpenCvSharp.UserInterface.PictureBoxIpl pictureBoxIpl;
     }
 }
 
