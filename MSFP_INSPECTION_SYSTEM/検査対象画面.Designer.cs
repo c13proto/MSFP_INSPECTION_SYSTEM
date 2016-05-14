@@ -49,6 +49,7 @@
             this.radioButton_合成 = new System.Windows.Forms.RadioButton();
             this.button_二値 = new System.Windows.Forms.Button();
             this.trackBar = new System.Windows.Forms.TrackBar();
+            this.button_画像保存 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIpl)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
@@ -254,12 +255,23 @@
             this.trackBar.TabIndex = 19;
             this.trackBar.ValueChanged += new System.EventHandler(this.ValueChanged_trackBar);
             // 
+            // button_画像保存
+            // 
+            this.button_画像保存.Location = new System.Drawing.Point(7, 313);
+            this.button_画像保存.Name = "button_画像保存";
+            this.button_画像保存.Size = new System.Drawing.Size(109, 23);
+            this.button_画像保存.TabIndex = 20;
+            this.button_画像保存.Text = "画像保存";
+            this.button_画像保存.UseVisualStyleBackColor = true;
+            this.button_画像保存.Click += new System.EventHandler(this.Click_画像保存);
+            // 
             // 検査対象画面
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(577, 376);
+            this.Controls.Add(this.button_画像保存);
             this.Controls.Add(this.trackBar);
             this.Controls.Add(this.button_二値);
             this.Controls.Add(this.panel1);
@@ -312,5 +324,6 @@
         private System.Windows.Forms.RadioButton radioButton_合成;
         private System.Windows.Forms.Button button_二値;
         private System.Windows.Forms.TrackBar trackBar;
+        private System.Windows.Forms.Button button_画像保存;
     }
 }

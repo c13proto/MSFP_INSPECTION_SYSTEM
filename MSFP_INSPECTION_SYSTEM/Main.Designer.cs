@@ -41,6 +41,7 @@
             this.radioButton_評価開始 = new System.Windows.Forms.RadioButton();
             this.radioButton_検査対象 = new System.Windows.Forms.RadioButton();
             this.radioButton_テンプレート = new System.Windows.Forms.RadioButton();
+            this.button_画像保存 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIpl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
             this.panel1.SuspendLayout();
@@ -179,12 +180,23 @@
             this.radioButton_テンプレート.UseVisualStyleBackColor = true;
             this.radioButton_テンプレート.CheckedChanged += new System.EventHandler(this.CheckedChanged_テンプレート);
             // 
+            // button_画像保存
+            // 
+            this.button_画像保存.Location = new System.Drawing.Point(6, 267);
+            this.button_画像保存.Name = "button_画像保存";
+            this.button_画像保存.Size = new System.Drawing.Size(108, 23);
+            this.button_画像保存.TabIndex = 10;
+            this.button_画像保存.Text = "画像保存";
+            this.button_画像保存.UseVisualStyleBackColor = true;
+            this.button_画像保存.Click += new System.EventHandler(this.Click_画像保存);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(579, 350);
+            this.Controls.Add(this.button_画像保存);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button_評価開始);
             this.Controls.Add(this.trackBar);
@@ -221,6 +233,7 @@
         private System.Windows.Forms.RadioButton radioButton_検査対象;
         private System.Windows.Forms.RadioButton radioButton_テンプレート;
         private OpenCvSharp.UserInterface.PictureBoxIpl pictureBoxIpl;
+        private System.Windows.Forms.Button button_画像保存;
     }
 }
 

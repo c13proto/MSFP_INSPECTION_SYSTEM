@@ -201,5 +201,31 @@ namespace MSFP_INSPECTION_SYSTEM
         {
             if (radioButton_合成.Checked) 表示画像更新();
         }
+
+        private void Click_画像保存(object sender, EventArgs e)
+        {
+            if (pictureBoxIpl.ImageIpl != null)
+            {
+                //System.IO.Directory.CreateDirectory(@"result");//resultフォルダの作成
+                SaveFileDialog sfd = new SaveFileDialog();//SaveFileDialogクラスのインスタンスを作成
+                                                          //sfd.FileName = textBox_Gaus.Text + "_" + textBox_Bright.Text + "_" + textBox_Cont.Text;//はじめのファイル名を指定する
+                                                          //sfd.InitialDirectory = @"result\";//はじめに表示されるフォルダを指定する
+                sfd.Filter = "画像ファイル|*.bmp;*.gif;*.jpg;*.png|全てのファイル|*.*";//[ファイルの種類]に表示される選択肢を指定する
+                sfd.FilterIndex = 1;//[ファイルの種類]ではじめに「画像ファイル」が選択されているようにする
+                sfd.Title = "保存先のファイルを選択してください";//タイトルを設定する
+                sfd.RestoreDirectory = true;//ダイアログボックスを閉じる前に現在のディレクトリを復元するようにする
+                sfd.OverwritePrompt = true;//既に存在するファイル名を指定したとき警告する．デフォルトでTrueなので指定する必要はない
+                sfd.CheckPathExists = true;//存在しないパスが指定されたとき警告を表示する．デフォルトでTrueなので指定する必要はない
+
+                //ダイアログを表示する
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    //OKボタンがクリックされたとき
+                    //選択されたファイル名を表示する
+                    System.Diagnostics.Debug.WriteLine(sfd.FileName);
+                    pictureBoxIpl.ImageIpl.SaveImage(sfd.FileName);
+                }
+            }
+        }
     }
 }
