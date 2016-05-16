@@ -42,6 +42,10 @@
             this.radioButton_検査対象 = new System.Windows.Forms.RadioButton();
             this.radioButton_テンプレート = new System.Windows.Forms.RadioButton();
             this.button_画像保存 = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBox_FBA_min = new System.Windows.Forms.TextBox();
+            this.textBox_FBA_max = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxIpl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar)).BeginInit();
             this.panel1.SuspendLayout();
@@ -190,12 +194,42 @@
             this.button_画像保存.UseVisualStyleBackColor = true;
             this.button_画像保存.Click += new System.EventHandler(this.Click_画像保存);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(34, 119);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(70, 12);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "FilterByArea";
+            // 
+            // textBox_FBA_min
+            // 
+            this.textBox_FBA_min.Location = new System.Drawing.Point(58, 134);
+            this.textBox_FBA_min.Name = "textBox_FBA_min";
+            this.textBox_FBA_min.Size = new System.Drawing.Size(17, 19);
+            this.textBox_FBA_min.TabIndex = 12;
+            this.textBox_FBA_min.Text = "9";
+            this.textBox_FBA_min.TextChanged += new System.EventHandler(this.TextChanged_FBA_min);
+            // 
+            // textBox_FBA_max
+            // 
+            this.textBox_FBA_max.Location = new System.Drawing.Point(81, 134);
+            this.textBox_FBA_max.Name = "textBox_FBA_max";
+            this.textBox_FBA_max.Size = new System.Drawing.Size(33, 19);
+            this.textBox_FBA_max.TabIndex = 13;
+            this.textBox_FBA_max.Text = "100";
+            this.textBox_FBA_max.TextChanged += new System.EventHandler(this.TextChanged_FBA_max);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(579, 350);
+            this.Controls.Add(this.textBox_FBA_max);
+            this.Controls.Add(this.textBox_FBA_min);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.button_画像保存);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button_評価開始);
@@ -234,6 +268,10 @@
         private System.Windows.Forms.RadioButton radioButton_テンプレート;
         private OpenCvSharp.UserInterface.PictureBoxIpl pictureBoxIpl;
         private System.Windows.Forms.Button button_画像保存;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBox_FBA_min;
+        private System.Windows.Forms.TextBox textBox_FBA_max;
     }
 }
 

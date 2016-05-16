@@ -19,6 +19,8 @@ namespace MSFP_INSPECTION_SYSTEM
 
         public static int[][,] 正解座標;
         public static int 検査面数= 5;
+
+        public static int[] FilterByArea=new int[2];
         
 
         MyFunction MyFunc = new MyFunction();
@@ -28,7 +30,8 @@ namespace MSFP_INSPECTION_SYSTEM
         {
             InitializeComponent();
             検査面数 = int.Parse(textBox_検査面数.Text);
-
+            FilterByArea[0] = int.Parse(textBox_FBA_min.Text);
+            FilterByArea[1] = int.Parse(textBox_FBA_max.Text);
 
             テンプレート = new Mat[検査面数];
         }
@@ -126,7 +129,17 @@ namespace MSFP_INSPECTION_SYSTEM
             if (int.TryParse(textBox_検査面数.Text, out num)) 検査面数 = num;
         }
 
+        private void TextChanged_FBA_min(object sender, EventArgs e)
+        {
+            var num = 0;
+            if (int.TryParse(textBox_FBA_min.Text, out num)) FilterByArea[0] = num;
+        }
 
+        private void TextChanged_FBA_max(object sender, EventArgs e)
+        {
+            var num = 0;
+            if (int.TryParse(textBox_FBA_max.Text, out num)) FilterByArea[1] = num;
+        }
 
         void 表示画像更新()
         {
@@ -185,5 +198,7 @@ namespace MSFP_INSPECTION_SYSTEM
                 }
             }
         }
+
+
     }
 }

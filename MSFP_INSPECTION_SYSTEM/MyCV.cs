@@ -135,7 +135,6 @@ namespace MSFP_INSPECTION_SYSTEM
         }
         public void 評価結果画像作成_debug(Mat 検査結果,Mat テンプレート,int[,] 正解座標,ref Mat color_debug)
         {
-            int noize_min = 9, noize_max = 100;
             
             Mat res_color  = new Mat(new Size(検査結果.Width, 検査結果.Height), MatType.CV_8UC3, Scalar.All(0));
             var temp_color = res_color.Clone();
@@ -143,7 +142,7 @@ namespace MSFP_INSPECTION_SYSTEM
             CvBlobs blobs = new CvBlobs(検査結果);
             int score=0;
 
-            blobs.FilterByArea(noize_min, noize_max);
+            blobs.FilterByArea(Main.FilterByArea[0], Main.FilterByArea[1]);
             blobs.RenderBlobs(検査結果, res_color);
 
             
@@ -202,10 +201,9 @@ namespace MSFP_INSPECTION_SYSTEM
 
         public int 点数計算(Mat 検査結果, int[,] 正解座標)
         {
-            int noize_min = 9, noize_max = 100;
             CvBlobs blobs = new CvBlobs(検査結果);
             int score = 0;
-            blobs.FilterByArea(noize_min, noize_max);
+            blobs.FilterByArea(Main.FilterByArea[0], Main.FilterByArea[1]);
 
             int[,] 正解座標2 = (int[,])正解座標.Clone();
             int 正解数 = 0;
