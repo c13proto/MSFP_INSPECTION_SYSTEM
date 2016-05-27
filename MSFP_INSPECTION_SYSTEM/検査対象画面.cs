@@ -150,6 +150,7 @@ namespace MSFP_INSPECTION_SYSTEM
             TopHat = new Mat[検査面数];
             
             for (int i = 0; i < 検査面数; i++) MyCV.TopHat(合成画像[i],ref TopHat[i], int.Parse(textBox_サイズ.Text), int.Parse(textBox_回数.Text));
+            if (radioButton_TopHat.Checked) 表示画像更新();
             radioButton_TopHat.Checked = true;
         }
 
