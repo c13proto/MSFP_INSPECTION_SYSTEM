@@ -32,7 +32,6 @@ namespace MSFP_INSPECTION_SYSTEM
             合成画像=(Mat[])検査対象画面.合成画像.Clone();
             正解座標 = (int[][,])Main.正解座標.Clone();
             プログレスバー = progressBar;
-
         }
 
         public static 探索画面 Instance

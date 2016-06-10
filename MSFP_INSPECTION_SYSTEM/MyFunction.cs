@@ -45,23 +45,9 @@ namespace MSFP_INSPECTION_SYSTEM
         {
             int 今の世代 = 0;
             List<int[]> グラフデータ = new List<int[]>();
-            //親は[0~1,],子は[2~3,]に戻す
             int[,] 局所集団 = new int[4, パラメータ.Length / 2 + 1];
 
-            int[] 初期親1 = ランダムに遺伝子1つ作成(パラメータ);
-            int[] 初期親2 = ランダムに遺伝子1つ作成(パラメータ);
-            int[] 初期子1 = 親からランダムな交叉(初期親1, 初期親2, パラメータ.Length / 2);
-            int[] 初期子2 = 親からランダムな交叉(初期親1, 初期親2, パラメータ.Length / 2);
-            初期子2 = ランダムな突然変異(初期子2, パラメータ);
-
-            for (int i = 0; i < パラメータ.Length / 2; i++)
-            {
-                局所集団[0, i] = 初期親1[i];
-                局所集団[1, i] = 初期親2[i];
-                局所集団[2, i] = 初期子1[i];
-                局所集団[3, i] = 初期子2[i];
-            }
-
+            局所集団= 局所集団の初期化(パラメータ);
 
             while (今の世代 <= 最終世代)
             {
@@ -91,7 +77,7 @@ namespace MSFP_INSPECTION_SYSTEM
 
             局所集団 = 遺伝子を成績順にソート(局所集団, 4, パラメータ.Length / 2);
             //遺伝子情報を画面に出力(局所集団[0, 0], 局所集団[0, 1], 局所集団[0, 2], 局所集団[0, 3], 局所集団[0, 4], 局所集団[0, 5]);
-            グラフデータを出力(グラフデータ, DateTime.Now.ToString("yy-MM-dd_") + "グラフデータ");
+            if(graph)グラフデータを出力(グラフデータ, DateTime.Now.ToString("yy-MM-dd_") + "グラフデータ");
             System.Diagnostics.Debug.WriteLine("PfGA終了");
             探索画面.プログレスバー.Value = 100;
 
@@ -107,7 +93,7 @@ namespace MSFP_INSPECTION_SYSTEM
 
             //親は[0~1,],子は[2~3,]に戻す
             int[,] 局所集団 = new int[4, パラメータ.Length / 2 + 1];
-            int[,] リスト = new int[目標累計, パラメータ.Length / 2 + 1];
+            List<int[]> リスト = new List<int[]>();
 
 
             while (累計達成者 < 目標累計)
@@ -123,23 +109,27 @@ namespace MSFP_INSPECTION_SYSTEM
                     {
                         if (局所集団[i, パラメータ.Length / 2] >= int.Parse(目標スコア[0]) && 局所集団[i, パラメータ.Length / 2] <= int.Parse(目標スコア[1]))
                         {
-                            for (int j = 0; j < パラメータ.Length / 2 + 1; j++) リスト[累計達成者, j] = 局所集団[i, j];
+                            int[] 達成者 = new int[パラメータ.Length/2+1];
+                            for (int j = 0; j < 達成者.Length; j++) 達成者[j]=局所集団[i, j];
+                            リスト.Add(達成者);
+                            達成者 = null;
                             ノルマ達成 = true;
                         }
                     }
                     System.Diagnostics.Debug.WriteLine("総世代数:" + 総世代数 + ",累計達成者:" + 累計達成者);
                     総世代数++;
                 }
+                
                 累計達成者++;
+                局所集団 = null;
+
                 探索画面.プログレスバー.Value = 100*累計達成者/目標累計;
-                遺伝子情報をCSV出力(リスト, 目標累計, パラメータ.Length / 2, DateTime.Now.ToString("yy-MM-dd_") + "List" + "_" + 目標スコア[0] + "_" + 目標スコア[1]);
-                // System.Diagnostics.Debug.WriteLine("総世代数:" + 総世代数+",累計満点者:"+累計満点者);
+                グラフデータを出力(リスト, DateTime.Now.ToString("yy-MM-dd_") + "List" + "_" + 目標スコア[0] + "_" + 目標スコア[1]);
             }
             探索画面.プログレスバー.Value = 100;
             System.Diagnostics.Debug.WriteLine("総世代数:" + 総世代数 + ",累計達成者:" + 累計達成者);
             System.Diagnostics.Debug.WriteLine("リスト出力完了");
-
-            局所集団 = null;
+            
             リスト = null;
         }
         private int[,] 局所集団の初期化(int[,] パラメータ)
@@ -467,10 +457,11 @@ namespace MSFP_INSPECTION_SYSTEM
                     {
                         dst[num / 4] = new Mat(height, width, MatType.CV_8UC1);
                         Mat[] images = new Mat[4];
-                        for (int i = 0; i < 4; i++) images[i] = 合成用素材[num - i];
+                        for (int i = 0; i < 4; i++) images[i] = 合成用素材[num - i].Clone();
                         MyCv.自作反射光除去(images, ref dst[num / 4]);
                         MyCv.コントラスト調整(ref dst[num / 4], (double)(p1 / 10.0));
                         MyCv.明るさ調整(ref dst[num / 4], (double)p2);
+                        for (int i = 0; i < images.Length; i++) images[i].Dispose();
                     }
                 }
             }
@@ -484,9 +475,8 @@ namespace MSFP_INSPECTION_SYSTEM
                 MyCv.評価用画像作成(テンプレート[i], dst[i].Clone(), ref dst[i]);
                 scores[i] = MyCv.点数計算(dst[i], 正解座標[i]);
             }
-
-
-            dst = null;
+            
+            for(int i=0;i<dst.Length;i++)dst[i].Dispose();
             MyCv = null;
             return (int)scores.Average();
         }
@@ -494,8 +484,11 @@ namespace MSFP_INSPECTION_SYSTEM
         {
             System.IO.Directory.CreateDirectory(@"result");
             String 結果 = "";
-            foreach (int[] score in data) 結果 += score[0] + "," + score[1] + "\n";
-
+            foreach (int[] score in data)
+            {
+                for (int i = 0; i < score.Length; i++) 結果 += score[i] + ",";
+                結果 +="\n";
+            }
             using (StreamWriter w = new StreamWriter(@"result\" + ファイル名 + ".csv"))
             {
                 w.Write(結果);

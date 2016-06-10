@@ -156,7 +156,7 @@
             this.textBox_4e.Name = "textBox_4e";
             this.textBox_4e.Size = new System.Drawing.Size(25, 19);
             this.textBox_4e.TabIndex = 13;
-            this.textBox_4e.Text = "10";
+            this.textBox_4e.Text = "20";
             // 
             // label5
             // 
@@ -181,7 +181,7 @@
             this.textBox_3e.Name = "textBox_3e";
             this.textBox_3e.Size = new System.Drawing.Size(25, 19);
             this.textBox_3e.TabIndex = 10;
-            this.textBox_3e.Text = "10";
+            this.textBox_3e.Text = "20";
             // 
             // label6
             // 
@@ -215,7 +215,7 @@
             this.textBox_5e.Name = "textBox_5e";
             this.textBox_5e.Size = new System.Drawing.Size(25, 19);
             this.textBox_5e.TabIndex = 17;
-            this.textBox_5e.Text = "100";
+            this.textBox_5e.Text = "200";
             // 
             // label8
             // 

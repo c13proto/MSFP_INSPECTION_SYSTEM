@@ -27,6 +27,7 @@ namespace MSFP_INSPECTION_SYSTEM
         {
             InitializeComponent();
             検査面数 = Main.検査面数;
+            trackBar.Maximum = 検査面数 - 1;
         }
 
         public static 検査対象画面 Instance
