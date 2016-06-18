@@ -57,7 +57,7 @@ namespace MSFP_INSPECTION_SYSTEM
 
                 for (int i = 0; i < 4; i++)
                     if (局所集団[i, パラメータ数] > max_score) max_score = 局所集団[i, パラメータ数];
-                System.Diagnostics.Debug.WriteLine("世代:"+今の世代+" スコア:"+max_score);
+                System.Diagnostics.Debug.WriteLine("世代:"+今の世代+" score:"+max_score);
 
                 if (今の世代 % 世代毎 == 0 || 今の世代 == 1 || max_score==10000)//途中と最終結果を出力 
                 {
@@ -119,7 +119,7 @@ namespace MSFP_INSPECTION_SYSTEM
                     }
                     
 
-                    System.Diagnostics.Debug.WriteLine("総世代数:" + 総世代数 + ",累計達成者:" + 達成者リスト.LongCount()+",スコア:"+max_score);
+                    System.Diagnostics.Debug.WriteLine("世代:" + 総世代数 + ",達成者:" + 達成者リスト.LongCount()+",score:"+max_score);
                     総世代数++;
                 }                
 
@@ -127,7 +127,7 @@ namespace MSFP_INSPECTION_SYSTEM
                 グラフデータを出力(達成者リスト, DateTime.Now.ToString("yy-MM-dd_") + "List" + "_" + 目標スコア[0] + "_" + 目標スコア[1]);
             }
             探索画面.プログレスバー.Value = 100;
-            System.Diagnostics.Debug.WriteLine("総世代数:" + 総世代数 + ",累計達成者:" + 達成者リスト.LongCount());
+            System.Diagnostics.Debug.WriteLine("世代:" + 総世代数 + ",達成者:" + 達成者リスト.LongCount());
             System.Diagnostics.Debug.WriteLine("リスト出力完了");
 
             局所集団 = null;
@@ -245,17 +245,7 @@ namespace MSFP_INSPECTION_SYSTEM
                                     break;
                                 }
                                 else number = 1;//同じだった場合は次のパターンに移る
-
-                                //新子供1 = 親からランダムな交叉(子の大きい方, 子の小さい方, パラメータ数);
-                                //新子供2 = 親からランダムな交叉(子の大きい方, 子の小さい方, パラメータ数);
-                                //while (新子供1.SequenceEqual(新子供2)) ランダムな突然変異(新子供2, パラメータ);
-                                //for (int i = 0; i < パラメータ数; i++)
-                                //{
-                                //    next_group[0, i] = 子の大きい方[i];
-                                //    next_group[1, i] = 子の小さい方[i];
-                                //    next_group[2, i] = 新子供1[i];
-                                //    next_group[3, i] = 新子供2[i];
-                                //}
+                                
                             }
                             else if (number == 1)
                             {
@@ -265,16 +255,6 @@ namespace MSFP_INSPECTION_SYSTEM
                                     break;
                                 }
                                 else number = 0;
-                                //新子供1 = 親からランダムな交叉(子の大きい方, 親の大きい方, パラメータ数);
-                                //新子供2 = 親からランダムな交叉(子の大きい方, 親の大きい方, パラメータ数);
-                                //while (新子供1.SequenceEqual(新子供2)) ランダムな突然変異(新子供2, パラメータ);
-                                //for (int i = 0; i < パラメータ数; i++)
-                                //{
-                                //    next_group[0, i] = 子の大きい方[i];
-                                //    next_group[1, i] = 親の大きい方[i];
-                                //    next_group[2, i] = 新子供1[i];
-                                //    next_group[3, i] = 新子供2[i];
-                                //}
                             }
                             else if (number == 0)
                             {
@@ -284,17 +264,6 @@ namespace MSFP_INSPECTION_SYSTEM
                                     break;
                                 }
                                 else number = 2;
-                                //新子供1 = 親からランダムな交叉(子の小さい方, 親の大きい方, パラメータ数);
-                                //新子供2 = 親からランダムな交叉(子の小さい方, 親の大きい方, パラメータ数);
-                                //while (新子供1.SequenceEqual(新子供2)) ランダムな突然変異(新子供2, パラメータ);
-                                //for (int i = 0; i < パラメータ数; i++)
-                                //{
-                                //    next_group[0, i] = 子の小さい方[i];
-                                //    next_group[1, i] = 親の大きい方[i];
-                                //    next_group[2, i] = 新子供1[i];
-                                //    next_group[3, i] = 新子供2[i];
-                                //}
-
                             }
                         }
                     }
@@ -306,59 +275,22 @@ namespace MSFP_INSPECTION_SYSTEM
                 //子2個体がともに親の2個体より悪かった場合（ケースB）は、親2個体のうち良かった方のみが局所集団に戻り、局所集団数は1減少する。
                 else if (CA > PZ)
                 {
-                    next_group = 親から次の家族を作成(親の大きい方, ランダムに遺伝子1つ作成(パラメータ), パラメータ);
                     //System.Diagnostics.Debug.WriteLine("Pattern B");
-                    //全探索空間から1個体をランダムに取り出し、これを局所集団に追加する。
-
-                    //int[] 新親 = ランダムに遺伝子1つ作成(パラメータ);
-                    //新子供1 = 親からランダムな交叉(親の大きい方, 新親, パラメータ数);
-                    //新子供2 = 親からランダムな交叉(親の大きい方, 新親, パラメータ数);
-                    //新子供2 = ランダムな突然変異(新子供2, パラメータ);
-                    //while(新子供1.SequenceEqual(新子供2)) ランダムな突然変異(新子供2, パラメータ);
-                    //for (int i = 0; i < パラメータ数; i++)
-                    //{
-                    //    next_group[0, i] = 親の大きい方[i];
-                    //    next_group[1, i] = 新親[i];
-                    //    next_group[2, i] = 新子供1[i];
-                    //    next_group[3, i] = 新子供2[i];
-                    //}
+                    next_group = 親から次の家族を作成(親の大きい方, ランダムに遺伝子1つ作成(パラメータ), パラメータ);
+                    
                 }
                 //親2個体のうちどちらか一方のみが子2個体より良かった場合（ケースC）は、親2個体のうち良かった方と子2個体のうち良かった方が局所集団に戻り、局所集団数は変化しない。
                 else if (PA < CA && PZ > CA)
                 {
-                    next_group = 親から次の家族を作成(親の大きい方, 子の大きい方, パラメータ);
                     //System.Diagnostics.Debug.WriteLine("Pattern C");
-                    //新子供1 = 親からランダムな交叉(親の大きい方, 子の大きい方, パラメータ数);
-                    //新子供2 = 親からランダムな交叉(親の大きい方, 子の大きい方, パラメータ数);
-                    //新子供2 = ランダムな突然変異(新子供2, パラメータ);
-                    //while (新子供1.SequenceEqual(新子供2)) ランダムな突然変異(新子供2, パラメータ);
-                    //for (int i = 0; i < パラメータ数; i++)
-                    //{
-                    //    next_group[0, i] = 親の大きい方[i];
-                    //    next_group[1, i] = 子の大きい方[i];
-                    //    next_group[2, i] = 新子供1[i];
-                    //    next_group[3, i] = 新子供2[i];
-                    //}
+                    next_group = 親から次の家族を作成(親の大きい方, 子の大きい方, パラメータ);
+                    
                 }
                 //子2個体のうちどちらか一方のみが親2個体より良かった場合（ケースD）は、子2個体のうち良かった方のみが局所集団に戻り、全探索空間からランダムに1個体選んで局所集団に追加
                 else if (CA < PA  && CZ > PA)
                 {
-                    next_group = 親から次の家族を作成(子の大きい方, ランダムに遺伝子1つ作成(パラメータ), パラメータ);
-
                     //System.Diagnostics.Debug.WriteLine("Pattern D");
-                    //int[] 新親 = ランダムに遺伝子1つ作成(パラメータ);
-
-                    //新子供1 = 親からランダムな交叉(子の大きい方, 新親, パラメータ数);
-                    //新子供2 = 親からランダムな交叉(子の大きい方, 新親, パラメータ数);
-                    //新子供2 = ランダムな突然変異(新子供2, パラメータ);
-                    //while (新子供1.SequenceEqual(新子供2)) ランダムな突然変異(新子供2, パラメータ);
-                    //for (int i = 0; i < パラメータ数; i++)
-                    //{
-                    //    next_group[0, i] = 親の大きい方[i];
-                    //    next_group[1, i] = 子の大きい方[i];
-                    //    next_group[2, i] = 新子供1[i];
-                    //    next_group[3, i] = 新子供2[i];
-                    //}
+                    next_group = 親から次の家族を作成(子の大きい方, ランダムに遺伝子1つ作成(パラメータ), パラメータ);                    
                 }
                 else
                 {
@@ -384,7 +316,7 @@ namespace MSFP_INSPECTION_SYSTEM
             int[]c1 = 親からランダムな交叉(p1, p2, パラメータ数);
             int[] c2 = 親からランダムな交叉(p1,p2, パラメータ数);
             c2 = ランダムな突然変異(c2, パラメータ);
-            while (c1.SequenceEqual(c2)) ランダムな突然変異(c2, パラメータ);
+            while (c1.SequenceEqual(c2)) c2=ランダムな突然変異(c2, パラメータ);
             for (int i = 0; i < パラメータ数; i++)
             {
                 次の家族[0, i] = p1[i];
