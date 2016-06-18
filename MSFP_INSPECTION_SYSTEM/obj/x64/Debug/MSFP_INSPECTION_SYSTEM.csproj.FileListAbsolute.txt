@@ -47,9 +47,9 @@ C:\Users\ksuser\Documents\GitHub\MSFP_INSPECTION_SYSTEM\MSFP_INSPECTION_SYSTEM\b
 C:\Users\ksuser\Documents\GitHub\MSFP_INSPECTION_SYSTEM\MSFP_INSPECTION_SYSTEM\bin\x64\Debug\OpenCvSharp.xml
 C:\Users\ksuser\Documents\GitHub\MSFP_INSPECTION_SYSTEM\MSFP_INSPECTION_SYSTEM\bin\x64\Debug\OpenCvSharp.Blob.xml
 C:\Users\ksuser\Documents\GitHub\MSFP_INSPECTION_SYSTEM\MSFP_INSPECTION_SYSTEM\bin\x64\Debug\OpenCvSharp.Extensions.xml
-C:\Users\ksuser\Documents\GitHub\MSFP_INSPECTION_SYSTEM\MSFP_INSPECTION_SYSTEM\obj\x64\Debug\MSFP_INSPECTION_SYSTEM.csprojResolveAssemblyReference.cache
 C:\Users\ksuser\Documents\GitHub\MSFP_INSPECTION_SYSTEM\MSFP_INSPECTION_SYSTEM\obj\x64\Debug\MSFP_INSPECTION_SYSTEM.Main.resources
 C:\Users\ksuser\Documents\GitHub\MSFP_INSPECTION_SYSTEM\MSFP_INSPECTION_SYSTEM\obj\x64\Debug\MSFP_INSPECTION_SYSTEM.Properties.Resources.resources
 C:\Users\ksuser\Documents\GitHub\MSFP_INSPECTION_SYSTEM\MSFP_INSPECTION_SYSTEM\obj\x64\Debug\MSFP_INSPECTION_SYSTEM.探索画面.resources
 C:\Users\ksuser\Documents\GitHub\MSFP_INSPECTION_SYSTEM\MSFP_INSPECTION_SYSTEM\obj\x64\Debug\MSFP_INSPECTION_SYSTEM.検査対象画面.resources
 C:\Users\ksuser\Documents\GitHub\MSFP_INSPECTION_SYSTEM\MSFP_INSPECTION_SYSTEM\obj\x64\Debug\MSFP_INSPECTION_SYSTEM.csproj.GenerateResource.Cache
+C:\Users\ksuser\Documents\GitHub\MSFP_INSPECTION_SYSTEM\MSFP_INSPECTION_SYSTEM\obj\x64\Debug\MSFP_INSPECTION_SYSTEM.csprojResolveAssemblyReference.cache

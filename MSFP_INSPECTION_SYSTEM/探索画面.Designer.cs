@@ -215,7 +215,7 @@
             this.textBox_5e.Name = "textBox_5e";
             this.textBox_5e.Size = new System.Drawing.Size(25, 19);
             this.textBox_5e.TabIndex = 17;
-            this.textBox_5e.Text = "200";
+            this.textBox_5e.Text = "100";
             // 
             // label8
             // 
@@ -245,20 +245,20 @@
             // 
             // textBox_点数範囲
             // 
-            this.textBox_点数範囲.Location = new System.Drawing.Point(105, 142);
+            this.textBox_点数範囲.Location = new System.Drawing.Point(99, 142);
             this.textBox_点数範囲.Name = "textBox_点数範囲";
-            this.textBox_点数範囲.Size = new System.Drawing.Size(59, 19);
+            this.textBox_点数範囲.Size = new System.Drawing.Size(65, 19);
             this.textBox_点数範囲.TabIndex = 24;
-            this.textBox_点数範囲.Text = "8000,9500";
+            this.textBox_点数範囲.Text = "8500,10000";
             // 
             // checkBox_list
             // 
             this.checkBox_list.AutoSize = true;
             this.checkBox_list.Location = new System.Drawing.Point(94, 108);
             this.checkBox_list.Name = "checkBox_list";
-            this.checkBox_list.Size = new System.Drawing.Size(68, 16);
+            this.checkBox_list.Size = new System.Drawing.Size(72, 16);
             this.checkBox_list.TabIndex = 25;
-            this.checkBox_list.Text = "gene list";
+            this.checkBox_list.Text = "リスト作成";
             this.checkBox_list.UseVisualStyleBackColor = true;
             // 
             // label10
@@ -347,7 +347,7 @@
             this.textBox_世代毎.Name = "textBox_世代毎";
             this.textBox_世代毎.Size = new System.Drawing.Size(26, 19);
             this.textBox_世代毎.TabIndex = 35;
-            this.textBox_世代毎.Text = "1";
+            this.textBox_世代毎.Text = "50";
             // 
             // label15
             // 

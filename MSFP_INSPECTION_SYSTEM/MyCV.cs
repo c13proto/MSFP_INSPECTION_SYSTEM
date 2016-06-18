@@ -201,8 +201,9 @@ namespace MSFP_INSPECTION_SYSTEM
 
         public int 点数計算(Mat 検査結果, int[,] 正解座標)
         {
-            CvBlobs blobs = new CvBlobs(検査結果);
+            
             int score = 0;
+            CvBlobs blobs = new CvBlobs(検査結果);
             blobs.FilterByArea(Main.FilterByArea[0], Main.FilterByArea[1]);
 
             int[,] 正解座標2 = (int[,])正解座標.Clone();
@@ -229,7 +230,7 @@ namespace MSFP_INSPECTION_SYSTEM
 
             不正回数 = blobs.Count - 正解数;
 
-            score= (int)((float)(正解数 - 不正回数) * (10000.0f / (正解座標.Length / 2)));
+            score = (int)((float)(正解数 - 不正回数) * (10000.0f / (正解座標.Length / 2)));
             blobs = null;
             return score;
         }

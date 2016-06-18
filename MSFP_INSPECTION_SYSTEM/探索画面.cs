@@ -23,7 +23,7 @@ namespace MSFP_INSPECTION_SYSTEM
         //初期状態null
         public static ProgressBar プログレスバー;
 
-        MyFunction MyFunc = new MyFunction();
+        
         public 探索画面()
         {
             InitializeComponent();
@@ -48,6 +48,7 @@ namespace MSFP_INSPECTION_SYSTEM
 
         private void Click_Start(object sender, EventArgs e)
         {
+            MyFunction MyFunc = new MyFunction();
             if (button_Start.Text == "Start")
             {
                 int[,] パラメータ ={ //[i,0]=i番目のパラメータの最小値,[i,1]=最大値
@@ -87,6 +88,8 @@ namespace MSFP_INSPECTION_SYSTEM
 
                 button_Start.Text = "Start";
             }
+
+            MyFunc = null;
         }
     }
 }
