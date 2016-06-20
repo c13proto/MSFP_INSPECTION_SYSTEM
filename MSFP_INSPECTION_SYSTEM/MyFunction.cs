@@ -228,7 +228,7 @@ namespace MSFP_INSPECTION_SYSTEM
                     int number = r.Next(3);
 
                     //親２体が全く同じパラメータになるのを回避
-                    if (子の大きい方.SequenceEqual(子の小さい方) && 子の小さい方.SequenceEqual(親の小さい方))
+                    if (子の大きい方.SequenceEqual(子の小さい方) && 子の小さい方.SequenceEqual(親の大きい方))
                     {
                         next_group = 親から次の家族を作成(子の大きい方, ランダムに遺伝子1つ作成(パラメータ), パラメータ);
                     }
