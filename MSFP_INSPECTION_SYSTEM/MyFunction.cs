@@ -67,7 +67,7 @@ namespace MSFP_INSPECTION_SYSTEM
                     グラフデータ.Add(new int[] { 今の世代, max_score });
                 if (max_score == 10000) break;
                 
-                探索画面.プログレスバー.Value = 100 * 今の世代 / 最終世代;
+                探索画面.プログレスバー.Value = 100 * 今の世代 / 最終世代;                
 
                 今の世代++;
             }
@@ -118,8 +118,8 @@ namespace MSFP_INSPECTION_SYSTEM
                         }
                     }
                     
-
                     System.Diagnostics.Debug.WriteLine("世代:" + 総世代数 + ",達成者:" + 達成者リスト.LongCount()+",score:"+max_score);
+                    
                     総世代数++;
                 }                
 
