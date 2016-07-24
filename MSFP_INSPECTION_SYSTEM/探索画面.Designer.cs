@@ -80,7 +80,7 @@
             this.textBox_1e.Name = "textBox_1e";
             this.textBox_1e.Size = new System.Drawing.Size(25, 19);
             this.textBox_1e.TabIndex = 3;
-            this.textBox_1e.Text = "100";
+            this.textBox_1e.Text = "10";
             // 
             // textBox_1s
             // 
@@ -122,7 +122,7 @@
             this.textBox_2e.Name = "textBox_2e";
             this.textBox_2e.Size = new System.Drawing.Size(25, 19);
             this.textBox_2e.TabIndex = 6;
-            this.textBox_2e.Text = "200";
+            this.textBox_2e.Text = "120";
             // 
             // label3
             // 

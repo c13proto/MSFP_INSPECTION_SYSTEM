@@ -57,7 +57,14 @@ namespace MSFP_INSPECTION_SYSTEM
 
                 for (int i = 0; i < 4; i++)
                     if (局所集団[i, パラメータ数] > max_score) max_score = 局所集団[i, パラメータ数];
-                System.Diagnostics.Debug.WriteLine("世代:"+今の世代+" score:"+max_score);
+
+                System.Text.StringBuilder debug = new System.Text.StringBuilder();
+                debug.Append("世代:");
+                debug.Append(今の世代);
+                debug.Append(",score:");
+                debug.Append(max_score);
+                System.Diagnostics.Debug.WriteLine(debug);
+                // System.Diagnostics.Debug.WriteLine("世代:"+今の世代+" score:"+max_score);
 
                 if (今の世代 % 世代毎 == 0 || 今の世代 == 1 || max_score==10000)//途中と最終結果を出力 
                 {
@@ -117,9 +124,15 @@ namespace MSFP_INSPECTION_SYSTEM
                             break;
                         }
                     }
-                    
-                    System.Diagnostics.Debug.WriteLine("世代:" + 総世代数 + ",達成者:" + 達成者リスト.LongCount()+",score:"+max_score);
-                    
+                    System.Text.StringBuilder debug = new System.Text.StringBuilder();
+                    debug.Append("世代:");
+                    debug.Append(総世代数);
+                    debug.Append(",達成者:");
+                    debug.Append(達成者リスト.LongCount());
+                    debug.Append(",score:");
+                    debug.Append(max_score);
+                    System.Diagnostics.Debug.WriteLine(debug);
+                    //System.Diagnostics.Debug.WriteLine("世代:" + 総世代数 + ",達成者:" + 達成者リスト.LongCount()+",score:"+max_score);
                     総世代数++;
                 }                
 
@@ -424,33 +437,40 @@ namespace MSFP_INSPECTION_SYSTEM
         private void グラフデータを出力(List<int[]> data, string ファイル名)
         {
             System.IO.Directory.CreateDirectory(@"result");
-            String 結果 = "";
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
             foreach (int[] score in data)
             {
-                for (int i = 0; i < score.Length; i++) 結果 += score[i] + ",";
-                結果 += "\n";
+                for (int i = 0; i < score.Length; i++)
+                {
+                    sb.Append(score[i]);
+                    sb.Append(',');
+                }
+                sb.Append('\n');
             }
             using (StreamWriter w = new StreamWriter(@"result\" + ファイル名 + ".csv"))
             {
-                w.Write(結果);
+                w.Write(sb);
                 w.Dispose();
             }
         }
         private void 遺伝子情報をCSV出力(int[,] 遺伝子, int 実験体数, int パラメータ数, String ファイル名)
         {
             System.IO.Directory.CreateDirectory(@"result");
-            String 結果 = "";
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
             for (int i = 0; i < 実験体数; i++)
                 for (int j = 0; j < パラメータ数 + 1; j++)
                 {
-                    結果 += 遺伝子[i, j] + ",";
-                    if (j == パラメータ数) 結果 += "\n";
+                    sb.Append(遺伝子[i, j]);
+                    sb.Append(',');
+                    
+                    if (j == パラメータ数) sb.Append('\n');
                 }
             using (StreamWriter w = new StreamWriter(@"result\" + ファイル名 + ".csv"))
             {
-                w.Write(結果);
+                w.Write(sb);
                 w.Dispose();
             }
+            
             
         }
         private int[] ランダムに遺伝子1つ作成(int[,] パラメータ)
@@ -544,7 +564,7 @@ namespace MSFP_INSPECTION_SYSTEM
             r = null;
             return gene;
         }
-        
+
 
     }
 
