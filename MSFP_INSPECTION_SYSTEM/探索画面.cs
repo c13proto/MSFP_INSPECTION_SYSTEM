@@ -23,6 +23,8 @@ namespace MSFP_INSPECTION_SYSTEM
         //初期状態null
         public static ProgressBar プログレスバー;
 
+        public static int 許容不正解数=5;
+
         
         public 探索画面()
         {
@@ -32,6 +34,7 @@ namespace MSFP_INSPECTION_SYSTEM
             合成画像=(Mat[])検査対象画面.合成画像.Clone();
             正解座標 = (int[][,])Main.正解座標.Clone();
             プログレスバー = progressBar;
+            許容不正解数 = int.Parse(textBox_許容.Text);
         }
 
         public static 探索画面 Instance
@@ -90,6 +93,11 @@ namespace MSFP_INSPECTION_SYSTEM
             }
 
             MyFunc = null;
+        }
+
+        private void TextChanged_許容(object sender, EventArgs e)
+        {
+            許容不正解数 = int.Parse(textBox_許容.Text);
         }
     }
 }

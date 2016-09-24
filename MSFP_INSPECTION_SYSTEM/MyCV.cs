@@ -164,7 +164,8 @@ namespace MSFP_INSPECTION_SYSTEM
                 
                 int[,] 正解座標2 = (int[,])正解座標.Clone();
                 int 正解数 = 0;
-                int 不正回数 = 0;
+                int 不正解数 = 0;
+                int 許容回数 = 探索画面.許容不正解数;
 
                 foreach (CvBlob item in blobs.Values)
                 {
@@ -191,15 +192,16 @@ namespace MSFP_INSPECTION_SYSTEM
                     if (正解座標2[i, 0] != 0) System.Diagnostics.Debug.WriteLine(i + ":" + 正解座標2[i, 0] + "," + 正解座標2[i, 1]);
                 }
 
-                不正回数 = blobs.Count - 正解数;
-
-                score = (int)((float)(正解数 - 不正回数) * (10000.0f / (正解座標.Length / 2)));
+                不正解数 = blobs.Count - 正解数;
+                if(不正解数<=許容回数)score= (int)((float)(正解数) * (10000.0f / (正解座標.Length / 2)));
+                else                 score = (int)((float)(正解数 - (不正解数-許容回数)) * (10000.0f / (正解座標.Length / 2)));
 
                 Cv2.PutText(color, "score= " + score.ToString(), new Point(10, 120), HersheyFonts.HersheySimplex,1, new Scalar(0, 0, 0));
+                Cv2.PutText(color, "uncorrect= " + 不正解数.ToString(), new Point(10, 140), HersheyFonts.HersheySimplex, 1, new Scalar(0, 0, 0));
             }
         }
 
-        public int 点数計算(Mat 検査結果, int[,] 正解座標)
+        public int[] 点数計算(Mat 検査結果, int[,] 正解座標)
         {
             
             int score = 0;
@@ -208,7 +210,8 @@ namespace MSFP_INSPECTION_SYSTEM
 
             int[,] 正解座標2 = (int[,])正解座標.Clone();
             int 正解数 = 0;
-            int 不正回数 = 0;
+            int 不正解数 = 0;
+            int 許容回数 = 探索画面.許容不正解数;
 
             foreach (CvBlob item in blobs.Values)
             {
@@ -228,11 +231,13 @@ namespace MSFP_INSPECTION_SYSTEM
                 }
             }
 
-            不正回数 = blobs.Count - 正解数;
+            不正解数 = blobs.Count - 正解数;
 
-            score = (int)((float)(正解数 - 不正回数) * (10000.0f / (正解座標.Length / 2)));
+            if (不正解数 <= 許容回数) score = (int)((float)(正解数) * (10000.0f / (正解座標.Length / 2)));
+            else score = (int)((float)(正解数 - (不正解数 - 許容回数)) * (10000.0f / (正解座標.Length / 2)));
+
             blobs = null;
-            return score;
+            return new int[] { score , 不正解数 } ;
         }
         public void GetEnclosingCircle(IEnumerable<Point> points, out Point2f center, out float radius)
         {

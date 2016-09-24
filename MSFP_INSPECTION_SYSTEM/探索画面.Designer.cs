@@ -62,6 +62,8 @@
             this.button_Start = new System.Windows.Forms.Button();
             this.textBox_世代毎 = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
+            this.textBox_許容 = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // checkBox_合成skip
@@ -299,7 +301,7 @@
             // checkBox_収束グラフ
             // 
             this.checkBox_収束グラフ.AutoSize = true;
-            this.checkBox_収束グラフ.Location = new System.Drawing.Point(94, 183);
+            this.checkBox_収束グラフ.Location = new System.Drawing.Point(93, 220);
             this.checkBox_収束グラフ.Name = "checkBox_収束グラフ";
             this.checkBox_収束グラフ.Size = new System.Drawing.Size(73, 16);
             this.checkBox_収束グラフ.TabIndex = 30;
@@ -308,7 +310,7 @@
             // 
             // textBox_pitch
             // 
-            this.textBox_pitch.Location = new System.Drawing.Point(139, 199);
+            this.textBox_pitch.Location = new System.Drawing.Point(138, 236);
             this.textBox_pitch.Name = "textBox_pitch";
             this.textBox_pitch.Size = new System.Drawing.Size(23, 19);
             this.textBox_pitch.TabIndex = 31;
@@ -317,7 +319,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(103, 202);
+            this.label13.Location = new System.Drawing.Point(102, 239);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(30, 12);
             this.label13.TabIndex = 32;
@@ -358,12 +360,32 @@
             this.label15.TabIndex = 37;
             this.label15.Text = "世代毎";
             // 
+            // textBox_許容
+            // 
+            this.textBox_許容.Location = new System.Drawing.Point(138, 199);
+            this.textBox_許容.Name = "textBox_許容";
+            this.textBox_許容.Size = new System.Drawing.Size(23, 19);
+            this.textBox_許容.TabIndex = 38;
+            this.textBox_許容.Text = "5";
+            this.textBox_許容.TextChanged += new System.EventHandler(this.TextChanged_許容);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(85, 184);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(77, 12);
+            this.label14.TabIndex = 39;
+            this.label14.Text = "許容不正解数";
+            // 
             // 探索画面
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(181, 292);
+            this.ClientSize = new System.Drawing.Size(176, 289);
+            this.Controls.Add(this.textBox_許容);
+            this.Controls.Add(this.label14);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.textBox_世代毎);
             this.Controls.Add(this.button_Start);
@@ -440,5 +462,7 @@
         private System.Windows.Forms.TextBox textBox_世代毎;
         private System.Windows.Forms.Label label15;
         public System.Windows.Forms.ProgressBar progressBar;
+        private System.Windows.Forms.TextBox textBox_許容;
+        private System.Windows.Forms.Label label14;
     }
 }
