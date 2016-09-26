@@ -12,9 +12,11 @@ namespace MSFP_INSPECTION_SYSTEM
 {
     class MyFunction
     {
+        const int 他の要素 = 3;
         public void read_csv(ref int[,] 正解座標,string path)
         {
             var csvRecords = new System.Collections.ArrayList();
+            
 
             try
             {
@@ -47,7 +49,7 @@ namespace MSFP_INSPECTION_SYSTEM
             int パラメータ数 = パラメータ.Length / 2;
             int 今の世代 = 0;
             List<int[]> グラフデータ = new List<int[]>();
-            int[,] 局所集団 = new int[4, パラメータ数 + 2];//パラメータ，点数，不正解数
+            int[,] 局所集団 = new int[4, パラメータ数 + 他の要素];//パラメータ，点数，不正解数
 
 
             while (今の世代 <= 最終世代)
@@ -94,7 +96,7 @@ namespace MSFP_INSPECTION_SYSTEM
             string[] 目標スコア = スコア範囲.Split(',');
 
             //親は[0~1,],子は[2~3,]に戻す
-            int[,] 局所集団 = new int[4, パラメータ数 + 2];
+            int[,] 局所集団 = new int[4, パラメータ数 + 他の要素];
             List<int[]> 達成者リスト = new List<int[]>();
 
 
@@ -113,13 +115,13 @@ namespace MSFP_INSPECTION_SYSTEM
 
                         if (局所集団[i, パラメータ数] >= int.Parse(目標スコア[0]) && 局所集団[i, パラメータ数] <= int.Parse(目標スコア[1]))
                         {
-                            int[] 達成者 = new int[パラメータ数 + 2];
+                            int[] 達成者 = new int[パラメータ数 + 他の要素];
                             for (int j = 0; j < 達成者.Length; j++) 達成者[j]=局所集団[i, j];
 
                             達成者リスト.Add(達成者);                            
                             達成者 = null;
                             ノルマ達成 = true;
-                            for (int col = 0; col < パラメータ数 + 2; col++)局所集団[0,col]=0;//初期化
+                            for (int col = 0; col < パラメータ数 + 他の要素; col++)局所集団[0,col]=0;//初期化
 
                             break;
                         }
@@ -150,7 +152,7 @@ namespace MSFP_INSPECTION_SYSTEM
         {
             int パラメータ数 = パラメータ.Length / 2;
 
-            int[,] next_group = new int[4, パラメータ数 + 2];
+            int[,] next_group = new int[4, パラメータ数 + 他の要素];
 
             
 
@@ -164,12 +166,12 @@ namespace MSFP_INSPECTION_SYSTEM
             {//子供優先の順位付け
                 var 家族= new Dictionary<string,int>();
 
-                int[] 親の大きい方 = new int[パラメータ数 +2];
-                int[] 親の小さい方 = new int[パラメータ数 +2];
-                int[] 子の大きい方 = new int[パラメータ数 +2];
-                int[] 子の小さい方 = new int[パラメータ数 +2];
-                int[] 新子供1 = new int[パラメータ数 +2];
-                int[] 新子供2 = new int[パラメータ数 + 2];
+                int[] 親の大きい方 = new int[パラメータ数 + 他の要素];
+                int[] 親の小さい方 = new int[パラメータ数 + 他の要素];
+                int[] 子の大きい方 = new int[パラメータ数 + 他の要素];
+                int[] 子の小さい方 = new int[パラメータ数 + 他の要素];
+                int[] 新子供1 = new int[パラメータ数 + 他の要素];
+                int[] 新子供2 = new int[パラメータ数 + 他の要素];
 
                 //順位を格納
                 int PA = 0;
@@ -180,26 +182,26 @@ namespace MSFP_INSPECTION_SYSTEM
 
                 //親子の点数の関係を確認
                 if (group[0, パラメータ数] > group[1, パラメータ数])
-                    for (int i = 0; i < パラメータ数+2; i++)
+                    for (int i = 0; i < パラメータ数 + 他の要素; i++)
                     {
                         親の大きい方[i] = group[0, i];
                         親の小さい方[i] = group[1, i];
                         
                     }
                 else
-                    for (int i = 0; i < パラメータ数+2; i++)
+                    for (int i = 0; i < パラメータ数 + 3; i++)
                     {
                         親の大きい方[i] = group[1, i];
                         親の小さい方[i] = group[0, i];
                     }
                 if (group[2, パラメータ数] > group[3, パラメータ数])
-                    for (int i = 0; i < パラメータ数+2; i++)
+                    for (int i = 0; i < パラメータ数 + 他の要素; i++)
                     {
                         子の大きい方[i] = group[2, i];
                         子の小さい方[i] = group[3, i];
                     }
                 else
-                    for (int i = 0; i < パラメータ数+2; i++)
+                    for (int i = 0; i < パラメータ数 + 他の要素; i++)
                     {
                         子の大きい方[i] = group[3, i];
                         子の小さい方[i] = group[2, i];
@@ -317,8 +319,10 @@ namespace MSFP_INSPECTION_SYSTEM
                 for (int i = 0; i < 4; i++)
                 {
                     int[] buff= 評価結果(テンプレート, 合成用素材, 合成画像, 正解座標, next_group[i, 0], next_group[i, 1], next_group[i, 2], next_group[i, 3], next_group[i, 4]);
-                    next_group[i, パラメータ数] = buff[0];
-                    next_group[i, パラメータ数+1] = buff[1];
+                    for (int num = 0; num < 他の要素; num++) next_group[i, パラメータ数 + num] = buff[num];
+                    //next_group[i, パラメータ数 + 0] = buff[0];
+                    //next_group[i, パラメータ数 + 1] = buff[1];
+                    //next_group[i, パラメータ数 + 2] = buff[2];
                     // next_group[i, パラメータ数] = 評価結果(テンプレート, 合成用素材, 合成画像, 正解座標, next_group[i, 0], next_group[i, 1], next_group[i, 2], next_group[i, 3], next_group[i, 4]);
                 }
             }
@@ -328,7 +332,7 @@ namespace MSFP_INSPECTION_SYSTEM
         private int[,] 親から次の家族を作成(int[] p1,int[] p2,int[,] パラメータ)
         {
             int パラメータ数 = パラメータ.Length / 2;
-            int[,] 次の家族 = new int[4, パラメータ数 + 2];
+            int[,] 次の家族 = new int[4, パラメータ数 + 他の要素];
 
             int[]c1 = 親からランダムな交叉(p1, p2, パラメータ数);
             int[] c2 = 親からランダムな交叉(p1,p2, パラメータ数);
@@ -350,9 +354,10 @@ namespace MSFP_INSPECTION_SYSTEM
             int 検査面数 = テンプレート.Length;
 
             Mat[] dst = new Mat[検査面数];
-            int[] score = { 0, 0 };
+            int[] スコア等々 = { 0, 0 ,0};
             int[] scores = new int[検査面数];
             int[] uncorrects = new int[検査面数];
+            int[] unfinds = new int[検査面数];
             int width = テンプレート[0].Width;
             int height = テンプレート[0].Height;
 
@@ -379,9 +384,10 @@ namespace MSFP_INSPECTION_SYSTEM
                 MyCv.TopHat(dst[i].Clone(), ref dst[i], p3, p4);
                 MyCv.二値化(ref dst[i], p5);
                 MyCv.評価用画像作成(テンプレート[i], dst[i].Clone(), ref dst[i]);
-                score= MyCv.点数計算(dst[i], 正解座標[i]);
-                scores[i] = score[0];
-                uncorrects[i] = score[1];
+                スコア等々 = MyCv.点数計算(dst[i], 正解座標[i]);
+                scores[i] = スコア等々[0];
+                uncorrects[i] = スコア等々[1];
+                unfinds[i] = スコア等々[2];
                 //scores[i] = MyCv.点数計算(dst[i], 正解座標[i]);
             }
 
@@ -390,12 +396,12 @@ namespace MSFP_INSPECTION_SYSTEM
             for (int i = 0; i < dst.Length; i++) if(dst[i]!=null)dst[i].Dispose();
             MyCv = null;
 
-            return new int[] { (int)scores.Average() ,(int)uncorrects.Sum()};
+            return new int[] { (int)scores.Average() ,(int)uncorrects.Sum(),(int)unfinds.Sum()};
         }
         private int[,] 局所集団の初期化(Mat[] テンプレート, Mat[] 合成用素材, Mat[] 合成画像, int[][,] 正解座標, int[,] パラメータ)
         {
             int パラメータ数 = パラメータ.Length / 2;
-            var group = new int[4, パラメータ数 + 2];
+            var group = new int[4, パラメータ数 + 他の要素];
 
             int[] 初期親1 = ランダムに遺伝子1つ作成(パラメータ);
             int[] 初期親2 = ランダムに遺伝子1つ作成(パラメータ);
@@ -415,8 +421,10 @@ namespace MSFP_INSPECTION_SYSTEM
             for (int i = 0; i < 4; i++)
             {
                 int[] buff = 評価結果(テンプレート, 合成用素材, 合成画像, 正解座標, group[i, 0], group[i, 1], group[i, 2], group[i, 3], group[i, 4]);
-                group[i, パラメータ数] = buff[0];
-                group[i, パラメータ数 + 1] = buff[1];
+                for (int num = 0; num < 他の要素; num++) group[i, パラメータ数 + num] = buff[num];
+                //group[i, パラメータ数] = buff[0];
+                //group[i, パラメータ数 + 1] = buff[1];
+                //group[i, パラメータ数 + 2] = buff[2];
                 //group[i, パラメータ数] = 評価結果(テンプレート, 合成用素材, 合成画像, 正解座標, group[i, 0], group[i, 1], group[i, 2], group[i, 3], group[i, 4]);
             }
             return group;
@@ -434,10 +442,10 @@ namespace MSFP_INSPECTION_SYSTEM
                     {
                         //次の遺伝子のほうが成績が良かったら
                         NotSort = true;
-                        int[] 遺伝子temp = new int[パラメータ数 +2];//一時的にi番目の遺伝子を保存
-                        for (int j = 0; j < パラメータ数 + 2; j++) 遺伝子temp[j] = 遺伝子[i, j];
+                        int[] 遺伝子temp = new int[パラメータ数 + 他の要素];//一時的にi番目の遺伝子を保存
+                        for (int j = 0; j < パラメータ数 + 他の要素; j++) 遺伝子temp[j] = 遺伝子[i, j];
                         //i番目の遺伝子とi+1番目の遺伝子を交換
-                        for (int j = 0; j < パラメータ数 +2; j++)
+                        for (int j = 0; j < パラメータ数 + 他の要素; j++)
                         {
                             遺伝子[i, j] = 遺伝子[i + 1, j];
                             遺伝子[i + 1, j] = 遺伝子temp[j];
@@ -473,7 +481,7 @@ namespace MSFP_INSPECTION_SYSTEM
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             for (int i = 0; i < 実験体数; i++)
             {
-                for (int j = 0; j < パラメータ数 + 2; j++)
+                for (int j = 0; j < パラメータ数 + 他の要素; j++)
                 {
                     sb.Append(遺伝子[i, j]);
                     sb.Append(',');                    
@@ -501,7 +509,7 @@ namespace MSFP_INSPECTION_SYSTEM
             // そのseedを基にRandomを作る
             var r = new Random(seed++);
 
-            int[] gene = new int[パラメータ数 + 2];
+            int[] gene = new int[パラメータ数 + 他の要素];
 
             for (int i = 0; i < パラメータ数; i++)
             {
@@ -524,7 +532,7 @@ namespace MSFP_INSPECTION_SYSTEM
             // そのseedを基にRandomを作る
             var r = new Random(seed++);
 
-            int[] gene = new int[パラメータ数 + 2];
+            int[] gene = new int[パラメータ数 + 他の要素];
 
             for (int i = 0; i < パラメータ数; i++)
             {
@@ -552,7 +560,7 @@ namespace MSFP_INSPECTION_SYSTEM
 
             int 個数 = r.Next(パラメータ数)+1;
 
-            int[] gene = new int[パラメータ数 + 2];
+            int[] gene = new int[パラメータ数 + 他の要素];
             //重複しないように変更するパラメータを選ぶ
             HashSet<int> 変更するパラメータ = new HashSet<int>();
             while (変更するパラメータ.Count < 個数) 変更するパラメータ.Add(r.Next(パラメータ数));

@@ -166,6 +166,7 @@ namespace MSFP_INSPECTION_SYSTEM
                 int 正解数 = 0;
                 int 不正解数 = 0;
                 int 許容回数 = 探索画面.許容不正解数;
+                int 未検出数 = 0;
 
                 foreach (CvBlob item in blobs.Values)
                 {
@@ -189,7 +190,11 @@ namespace MSFP_INSPECTION_SYSTEM
                 System.Diagnostics.Debug.WriteLine("未検出座標");
                 for (int i = 0; i < 正解座標2.Length / 2; i++)
                 {//検出されなかった座標が残る
-                    if (正解座標2[i, 0] != 0) System.Diagnostics.Debug.WriteLine(i + ":" + 正解座標2[i, 0] + "," + 正解座標2[i, 1]);
+                    if (正解座標2[i, 0] != 0)
+                    {
+                        System.Diagnostics.Debug.WriteLine(i + ":" + 正解座標2[i, 0] + "," + 正解座標2[i, 1]);
+                        未検出数++;
+                    }
                 }
 
                 不正解数 = blobs.Count - 正解数;
@@ -197,7 +202,8 @@ namespace MSFP_INSPECTION_SYSTEM
                 else                 score = (int)((float)(正解数 - (不正解数-許容回数)) * (10000.0f / (正解座標.Length / 2)));
 
                 Cv2.PutText(color, "score= " + score.ToString(), new Point(10, 120), HersheyFonts.HersheySimplex,1, new Scalar(0, 0, 0));
-                Cv2.PutText(color, "uncorrect= " + 不正解数.ToString(), new Point(10, 140), HersheyFonts.HersheySimplex, 1, new Scalar(0, 0, 0));
+                Cv2.PutText(color, "unCorrect= " + 不正解数.ToString(), new Point(10, 140), HersheyFonts.HersheySimplex, 1, new Scalar(0, 0, 0));
+                Cv2.PutText(color, "unFind= " + 未検出数.ToString(), new Point(10, 160), HersheyFonts.HersheySimplex, 1, new Scalar(0, 0, 0));
             }
         }
 
@@ -212,6 +218,7 @@ namespace MSFP_INSPECTION_SYSTEM
             int 正解数 = 0;
             int 不正解数 = 0;
             int 許容回数 = 探索画面.許容不正解数;
+            int 未検出数 = 0;
 
             foreach (CvBlob item in blobs.Values)
             {
@@ -231,13 +238,18 @@ namespace MSFP_INSPECTION_SYSTEM
                 }
             }
 
+            for (int i = 0; i < 正解座標2.Length / 2; i++)
+            {//検出されなかった座標が残る
+                if (正解座標2[i, 0] != 0)未検出数++;
+            }
+
             不正解数 = blobs.Count - 正解数;
 
             if (不正解数 <= 許容回数) score = (int)((float)(正解数) * (10000.0f / (正解座標.Length / 2)));
             else score = (int)((float)(正解数 - (不正解数 - 許容回数)) * (10000.0f / (正解座標.Length / 2)));
 
             blobs = null;
-            return new int[] { score , 不正解数 } ;
+            return new int[] { score , 不正解数,未検出数 } ;
         }
         public void GetEnclosingCircle(IEnumerable<Point> points, out Point2f center, out float radius)
         {
