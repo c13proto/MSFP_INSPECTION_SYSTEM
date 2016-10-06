@@ -251,7 +251,7 @@
             this.textBox_点数範囲.Name = "textBox_点数範囲";
             this.textBox_点数範囲.Size = new System.Drawing.Size(65, 19);
             this.textBox_点数範囲.TabIndex = 24;
-            this.textBox_点数範囲.Text = "8500,10000";
+            this.textBox_点数範囲.Text = "9000,10000";
             // 
             // checkBox_list
             // 

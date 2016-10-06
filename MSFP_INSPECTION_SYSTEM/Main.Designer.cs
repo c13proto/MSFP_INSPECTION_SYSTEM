@@ -89,7 +89,7 @@
             this.textBox_検査面数.Name = "textBox_検査面数";
             this.textBox_検査面数.Size = new System.Drawing.Size(22, 19);
             this.textBox_検査面数.TabIndex = 3;
-            this.textBox_検査面数.Text = "5";
+            this.textBox_検査面数.Text = "1";
             this.textBox_検査面数.TextChanged += new System.EventHandler(this.TextChanged_検査面数);
             // 
             // label1
